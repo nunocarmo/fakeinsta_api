@@ -49,10 +49,10 @@ public class User {
     @OneToMany(mappedBy = "userId")
     private List<Post> postList;
 
-   @OneToMany(mappedBy = "from")
+   @OneToMany(mappedBy = "followerUser")
     private List<Follower> followers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "to")
+    @OneToMany(mappedBy = "followed")
     private List<Follower> follows = new ArrayList<>();
 
 }

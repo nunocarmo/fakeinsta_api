@@ -1,9 +1,12 @@
 package com.insta.api.insta.service.follower;
 
 import com.insta.api.insta.command.follower.FollowerDto;
+import com.insta.api.insta.command.user.UserDto;
 
 import java.util.List;
 
 public interface IFollowerService {
-    List<FollowerDto> getFollowersByUserId(Long id);
+    List<UserDto> getFollowersByUserId(Long id);
+
+    List<UserDto> getFollowsByUserId(Long id);
 }

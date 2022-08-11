@@ -1,6 +1,5 @@
 package com.insta.api.insta.controller.user;
 
-import com.insta.api.insta.command.follower.FollowDto;
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.service.user.IUserService;

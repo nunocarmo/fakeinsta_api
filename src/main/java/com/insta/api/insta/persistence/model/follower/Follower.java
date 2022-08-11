@@ -2,11 +2,8 @@ package com.insta.api.insta.persistence.model.follower;
 
 import com.insta.api.insta.persistence.model.user.User;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-import net.bytebuddy.implementation.bind.annotation.Super;
 
 import javax.persistence.*;
-import java.util.List;
 
 
 @Getter
@@ -23,12 +20,13 @@ public class Follower {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "from_user_fk")
-    private User from;
+    @JoinColumn(name = "follower_user_fk")
+    private User followerUser;
+
 
     @ManyToOne
-    @JoinColumn(name = "to_user_fk")
-    private User to;
+    @JoinColumn(name = "followed_user_fk")
+    private User followed;
 
 
 }

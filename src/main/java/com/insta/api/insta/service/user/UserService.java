@@ -3,11 +3,10 @@ package com.insta.api.insta.service.user;
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.converter.user.IUserConverter;
-import com.insta.api.insta.converter.user.UserConverter;
 import com.insta.api.insta.exception.*;
-import com.insta.api.insta.persistence.model.follower.Follow;
+import com.insta.api.insta.persistence.model.follower.Follower;
 import com.insta.api.insta.persistence.model.user.User;
-import com.insta.api.insta.persistence.repository.follower.IFollowRepository;
+import com.insta.api.insta.persistence.repository.follower.IFollowerRepository;
 import com.insta.api.insta.persistence.repository.user.IUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
     private IUserConverter userConverter;
 
-    private IFollowRepository followRepository;
+    private IFollowerRepository followerRepository;
 
     @Override
     public UserDto getUserById(Long id) {
@@ -46,7 +45,7 @@ public class UserService implements IUserService {
 
     @Override
     public List<UserDto> getAllUsers() {
-        List <User> users = this.userRepository.findAll();
+        List<User> users = this.userRepository.findAll();
         return userConverter.converterList(users, UserDto.class);
     }
 
@@ -62,9 +61,9 @@ public class UserService implements IUserService {
                 this.userRepository.save(updatedUser), UserDto.class);
     }
 
-   @Override
-    public List <UserDto> searchUsers(String username, String email, String name) {
-       List <User> users = this.userRepository.findUsers(username, email, name);
+    @Override
+    public List<UserDto> searchUsers(String username, String email, String name) {
+        List<User> users = this.userRepository.findUsers(username, email, name);
         return this.userConverter.converterList(users, UserDto.class);
     }
 
@@ -72,25 +71,29 @@ public class UserService implements IUserService {
     public UserDto getUserByUsername(String username) {
         User user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-        return this.userConverter.converter(user, UserDto.class); }
+        return this.userConverter.converter(user, UserDto.class);
+    }
 
     @Override
     public UserDto followUser(Long id, Long idToFollow) {
+        if(id == idToFollow) {
+            throw new BadRequestException(CANNOT_FOLLOW_YOURSELF);
+        }
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         User userToFollow = this.userRepository.findById(idToFollow)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-/*
-        Follow newFollow = new Follow();
-        newFollow.setTo(userToFollow);
-        this.followRepository.save(newFollow);
-        user.getFollows().add(newFollow);
-*/
 
-
-       // userToFollow.getFollowers().add(user);
+        if(!this.followerRepository.checkIfUserFollowsAlready(id, idToFollow).isEmpty()) {
+            throw new ConflictException(FOLLOW_ALREADY);
+        }
+        Follower follower = new Follower();
+        follower.setFollowed(userToFollow);
+        follower.setFollowerUser(user);
+        this.followerRepository.save(follower);
 
         this.userRepository.save(user);
-        return null;
+        this.userRepository.save(userToFollow);
+        return this.userConverter.converter(user, UserDto.class);
     }
 }
