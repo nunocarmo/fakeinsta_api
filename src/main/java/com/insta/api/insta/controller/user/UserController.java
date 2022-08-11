@@ -6,6 +6,7 @@ import com.insta.api.insta.service.user.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,33 +27,27 @@ public class UserController {
                                       @RequestParam(value = "name", required = false) String name) {
         return this.userService.searchUsers(username, email, name);
     }
-
-   /* @GetMapping("/search/{username}")
-    public UserDto getUserByUsername(@PathVariable("username") String username) {
-        return this.userService.getUserByUsername(username);}*/
-
     @GetMapping()
     public List<UserDto> getAllUsers() {
         return this.userService.getAllUsers();
     }
 
     @PostMapping
-    public UserDto registerUser(@RequestBody UserDto userDto) {
+    public UserDto registerUser(@Valid @RequestBody UserDto userDto) {
         return this.userService.registerUser(userDto);
     }
 
     @PatchMapping("/{id}")
-    public UserDto updateUser(@PathVariable("id") Long id, @RequestBody UserUpdateDto userUpdateDto) {
+    public UserDto updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserUpdateDto userUpdateDto) {
         return this.userService.updateUser(id, userUpdateDto);
     }
 
+
+
    /*
-    GET getUserByUsername(String username)
+
     GET getAllFollowers(userId)
     GET getAllFollows(userId)
-    Login JWT
-   DONE PATCH updateUserDetails(request body): para o password, username, email
-   DONE PATCH updateUserProfile(request body): para descrição, nome completo, foto
     POST/ PATCH follow(userId, otherUserId)
     POST/ PATCH unfollow(userId, otherUserId)
     DELETE deleteUser(userId)*/
