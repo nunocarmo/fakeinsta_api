@@ -1,6 +1,7 @@
 package com.insta.api.insta.service.user;
 
 import com.insta.api.insta.command.user.UserDto;
+import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.converter.user.UserConverter;
 import com.insta.api.insta.exception.*;
 import com.insta.api.insta.persistence.model.user.User;
@@ -44,4 +45,27 @@ public class UserService implements IUserService {
         List <User> users = this.userRepository.findAll();
         return userConverter.converterList(users, UserDto.class);
     }
+
+    @Override
+    public UserDto updateUser(Long id, UserUpdateDto userUpdateDto) {
+        User user = this.userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+       /* if (userUpdateDto.getPassword() != null) {
+            userUpdateDto.setPassword(encoder.encode(userUpdateDto.getPassword()));
+        }*/
+        User updatedUser = this.userConverter.converterUpdate(userUpdateDto, user);
+        return this.userConverter.converter(
+                this.userRepository.save(updatedUser), UserDto.class);
+    }
+
+/*    @Override
+    public List <UserDto> getUserByUsername(String username) {
+       List <User> users = this.userRepository.findByUsername(username);
+        return this.userConverter.converterList(users, UserDto.class);
+    }*/
+
+    @Override
+    public UserDto getUserByUsername(String username) {
+        User user = this.userRepository.findByUsername(username);
+        return this.userConverter.converter(user, UserDto.class); }
 }
