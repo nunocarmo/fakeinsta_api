@@ -21,12 +21,12 @@ public class Follower {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name="from_user_fk")
-    private User from;
+  //  @ManyToOne
+  //  @JoinColumn(name="from_user_fk")
+  //  private User from;
 
-    @ManyToOne
-    @JoinColumn(name="to_user_fk")
-    private User to;
+  //  @ManyToOne
+  //  @JoinColumn(name="to_user_fk")
+  //  private User to;
 
 }

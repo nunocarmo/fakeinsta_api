@@ -1,6 +1,6 @@
 package com.insta.api.insta.exception;
 
-import org.postgresql.util.PSQLException;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +29,6 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
-
-    //    @ExceptionHandler(value = {
-//            EmailAlreadyRegisteredException.class,
-//            RatingNotFoundException.class,
-//            ReviewNotFoundException.class,
-//            RoleAlreadyExistsException.class,
-//            RoleNotFoundException.class,
-//            UserNotFoundException.class
-//    })
-//    public ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
-//        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
-//    }
     @ExceptionHandler(value = BadRequestException.class)
     public ResponseEntity<Object> badRequestHandler(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
@@ -51,10 +39,10 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
-    @ExceptionHandler(value = PSQLException.class)
+  /*  @ExceptionHandler(value = PSQLException.class)
     public ResponseEntity<Object> psqlHandler(RuntimeException ex, WebRequest request) {
         return handleExceptionInternal(ex, "Parameter already exists", new HttpHeaders(), HttpStatus.CONFLICT, request);
-    }
+    }*/
 
     @ExceptionHandler(value = NotFoundException.class)
     public ResponseEntity<Object> notFoundHandler(RuntimeException ex, WebRequest request) {

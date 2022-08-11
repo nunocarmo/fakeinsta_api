@@ -42,12 +42,12 @@ public class User {
     private String profilePhoto;
 
     //@OneToMany(mappedBy="postId")
-    private List<Post> addedPosts;
+   // private List<Post> addedPosts;
 
-    @OneToMany(mappedBy="to")
-    private List<Follower> followers = new ArrayList<>();
+   // @OneToMany(mappedBy="to")
+  //  private List<Follower> followers = new ArrayList<>();
 
-    @OneToMany(mappedBy="from")
-    private List<Follower> following = new ArrayList<>();
+  //  @OneToMany(mappedBy="from")
+  //  private List<Follower> following = new ArrayList<>();
 
 }

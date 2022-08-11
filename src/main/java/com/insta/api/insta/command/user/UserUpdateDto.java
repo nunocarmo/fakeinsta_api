@@ -6,7 +6,5 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class UserUpdateDto {
 }
