@@ -1,8 +1,10 @@
 package com.insta.api.insta.persistence.model.user;
 
 import com.insta.api.insta.persistence.model.comment.Comment;
-import com.insta.api.insta.persistence.model.follower.Follower;
+import com.insta.api.insta.persistence.model.like.CommentUserLike;
+import com.insta.api.insta.persistence.model.like.PostUserLike;
 import com.insta.api.insta.persistence.model.post.Post;
+import com.insta.api.insta.persistence.model.follower.Follower;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,10 +44,10 @@ public class User {
     @Column(nullable = true, unique = false, updatable = true, length = 64)
     private String profilePhoto;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy="userId")
     private List<Comment> commentList;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy="userId")
     private List<Post> postList;
 
    @OneToMany(mappedBy = "followerUser")

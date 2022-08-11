@@ -1,10 +1,16 @@
 package com.insta.api.insta.command.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.insta.api.insta.command.comment.CommentIdDto;
+import com.insta.api.insta.command.like.UserLikeDto;
+import com.insta.api.insta.command.post.PostIdDto;
+import com.insta.api.insta.command.post.PostLessInfDto;
 import lombok.*;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,8 +45,9 @@ public class UserDto {
     private String description;
 
     private String profilePhoto;
-
-    // private List<Post> addedPosts;
+    private List<CommentIdDto> commentUserLikeList;
+    private List<PostIdDto> postUserLikeList;
+    private List<PostLessInfDto> postList;
 
     // private List<Follower> followers;
 

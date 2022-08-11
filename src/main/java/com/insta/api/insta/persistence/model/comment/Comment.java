@@ -1,10 +1,13 @@
 package com.insta.api.insta.persistence.model.comment;
 
+import com.insta.api.insta.persistence.model.like.CommentUserLike;
+import com.insta.api.insta.persistence.model.like.PostUserLike;
 import com.insta.api.insta.persistence.model.post.Post;
 import com.insta.api.insta.persistence.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,4 +31,7 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "post_id_fk")
     private Post postId;
+
+    @OneToMany(mappedBy = "commentId", cascade = CascadeType.REMOVE)
+    private List<CommentUserLike> commentUserLikeList;
 }

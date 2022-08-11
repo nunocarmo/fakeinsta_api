@@ -17,6 +17,7 @@ import java.util.Date;
 public class AddCommentDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id = null;
+
     @NotNull(message = "Can't post an empty comment")
     private String description;
     @NotNull(message = "user id can't be empty")
