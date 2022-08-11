@@ -1,6 +1,7 @@
 package com.insta.api.insta.service.user;
 
-import com.insta.api.insta.command.follower.AddFollowerDto;
+import com.insta.api.insta.command.follower.FollowDto;
+import com.insta.api.insta.command.follower.UnfollowDto;
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,9 @@ public interface IUserService {
 
     UserDto getUserByUsername(String username);
 
-    
+    ResponseEntity followUser(FollowDto followDto);
 
-    UserDto unfollowUser(Long id, Long idToUnfollow);
+    ResponseEntity unfollowUser(UnfollowDto unfollowDto);
 
-    ResponseEntity followUser(AddFollowerDto addFollowerDto);
+    ResponseEntity deleteUser(Long id);
 }

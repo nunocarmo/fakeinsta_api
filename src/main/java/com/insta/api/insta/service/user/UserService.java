@@ -1,7 +1,7 @@
 package com.insta.api.insta.service.user;
 
-import com.insta.api.insta.command.follower.AddFollowerDto;
-import com.insta.api.insta.command.follower.FollowerDto;
+import com.insta.api.insta.command.follower.FollowDto;
+import com.insta.api.insta.command.follower.UnfollowDto;
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.converter.user.IUserConverter;
@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.insta.api.insta.exception.ExceptionMessages.*;
 
@@ -83,12 +84,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public ResponseEntity followUser(AddFollowerDto addfollowerDto) {
-        if(addfollowerDto.getToFollowUserId() == addfollowerDto.getFollowerUserId()) {
+    public ResponseEntity followUser(FollowDto followDto) {
+        if(followDto.getToFollowUserId() == followDto.getFollowerUserId()) {
             throw new BadRequestException(CANNOT_FOLLOW_YOURSELF);
         }
-        Long followerId = addfollowerDto.getFollowerUserId();
-        Long userToFollowId = addfollowerDto.getToFollowUserId();
+        Long followerId = followDto.getFollowerUserId();
+        Long userToFollowId = followDto.getToFollowUserId();
 
         User userFollower = this.userRepository.findById(followerId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
@@ -98,13 +99,17 @@ public class UserService implements IUserService {
         if(!this.followerRepository.checkIfUserFollowsAlready(followerId, userToFollowId).isEmpty()) {
             throw new ConflictException(FOLLOW_ALREADY);
         }
-
         Follower follower = new Follower();
         follower.setFollowerUser(userFollower);
+        userFollower.getFollows().add(follower);
+
         follower.setFollowed(userToFollow);
+        userToFollow.getFollowers().add(follower);
+
+        System.out.println("follower " +followerId + "has this number of follows: "+  userFollower.getFollows().size());
+        System.out.println("followed " +userToFollowId + "has this number of followers: "+  userToFollow.getFollowers().size());
 
         this.followerRepository.save(follower);
-
         this.userRepository.save(userFollower);
         this.userRepository.save(userToFollow);
 
@@ -112,7 +117,42 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDto unfollowUser(Long id, Long idToUnfollow) {
-        return null;
+    public ResponseEntity unfollowUser(UnfollowDto unfollowDto) {
+        if(unfollowDto.getToUnfollowUserId() == unfollowDto.getFollowerUserId()) {
+            throw new BadRequestException(CANNOT_UNFOLLOW_YOURSELF);
+        }
+        Long followerId = unfollowDto.getFollowerUserId();
+        Long userToUnfollowId = unfollowDto.getToUnfollowUserId();
+
+        User userFollower = this.userRepository.findById(followerId)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        User userToUnfollow = this.userRepository.findById(userToUnfollowId)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+
+        Follower follower = this.followerRepository.findFollowerAndFollowedMatch(followerId, userToUnfollowId)
+                .orElseThrow(() -> new ConflictException(HAVE_NOT_FOLLOWED));
+
+        userFollower.getFollows().remove(follower);
+        userToUnfollow.getFollowers().remove(follower);
+
+        this.followerRepository.delete(follower);
+        this.userRepository.save(userFollower);
+        this.userRepository.save(userToUnfollow);
+
+        return new ResponseEntity<>("User with ID " + followerId + " unfollowed user with ID " + userToUnfollowId, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity deleteUser(Long id) {
+        //checkAuth.checkIfUserEqualsIdGiven(id);
+        Optional<User> user = this.userRepository.findById(id);
+        if (user.isEmpty())
+            return new ResponseEntity<>(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+
+        //clearUserCache();
+        this.userRepository.deleteById(id);
+        return new ResponseEntity<>("User deleted", HttpStatus.OK);
+    }
+
+
 }

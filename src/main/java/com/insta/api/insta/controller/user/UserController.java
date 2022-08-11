@@ -1,7 +1,7 @@
 package com.insta.api.insta.controller.user;
 
-import com.insta.api.insta.command.follower.AddFollowerDto;
-import com.insta.api.insta.command.follower.FollowerDto;
+import com.insta.api.insta.command.follower.FollowDto;
+import com.insta.api.insta.command.follower.UnfollowDto;
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.service.user.IUserService;
@@ -46,22 +46,17 @@ public class UserController {
     }
 
     @PatchMapping("/follow")
-    public ResponseEntity followUser(@RequestBody AddFollowerDto addFollowerDto) {
-        return this.userService.followUser(addFollowerDto);
+    public ResponseEntity followUser(@RequestBody FollowDto followDto) {
+        return this.userService.followUser(followDto);
     }
 
-    @PatchMapping("/{id}/unfollow/{idToFollow}")
-    public UserDto unfollowUser(@PathVariable("id") Long id, @PathVariable("idToUnfollow") Long idToUnfollow) {
-        return this.userService.unfollowUser(id, idToUnfollow);
+    @PatchMapping("/unfollow")
+    public ResponseEntity unfollowUser(@RequestBody UnfollowDto unfollowDto) {
+        return this.userService.unfollowUser(unfollowDto);
     }
 
-
-
-   /*
-
-
-
-    POST/ PATCH unfollow(userId, otherUserId)
-    DELETE deleteUser(userId)*/
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteUser(@PathVariable("id") Long id) {
+        return this.userService.deleteUser(id);
+    }
 }
