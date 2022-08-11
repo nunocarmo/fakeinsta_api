@@ -63,7 +63,11 @@ public class UserService implements IUserService {
 
     @Override
     public List<UserDto> searchUsers(String username, String email, String name) {
+        if(username.isEmpty() && email.isEmpty() && name.isEmpty()) {
+            throw new BadRequestException(AT_LEAST_1_PARAMETER);
+        }
         List<User> users = this.userRepository.findUsers(username, email, name);
+        if(users.isEmpty()) throw new BadRequestException(USER_NOT_FOUND);
         return this.userConverter.converterList(users, UserDto.class);
     }
 
@@ -95,5 +99,10 @@ public class UserService implements IUserService {
         this.userRepository.save(user);
         this.userRepository.save(userToFollow);
         return this.userConverter.converter(user, UserDto.class);
+    }
+
+    @Override
+    public UserDto unfollowUser(Long id, Long idToUnfollow) {
+        return null;
     }
 }

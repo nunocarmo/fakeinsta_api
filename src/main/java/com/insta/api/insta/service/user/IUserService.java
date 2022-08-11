@@ -19,4 +19,6 @@ public interface IUserService {
     UserDto getUserByUsername(String username);
 
     UserDto followUser(Long id, Long idToFollow);
+
+    UserDto unfollowUser(Long id, Long idToUnfollow);
 }

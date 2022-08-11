@@ -2,7 +2,6 @@ package com.insta.api.insta.persistence.model.user;
 
 import com.insta.api.insta.persistence.model.comment.Comment;
 import com.insta.api.insta.persistence.model.follower.Follower;
-import com.insta.api.insta.persistence.model.follower.Follow;
 import com.insta.api.insta.persistence.model.post.Post;
 import lombok.*;
 

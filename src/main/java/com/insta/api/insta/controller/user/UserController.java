@@ -47,12 +47,17 @@ public class UserController {
         return this.userService.followUser(id, idToFollow);
     }
 
+    @PatchMapping("/{id}/unfollow/{idToFollow}")
+    public UserDto unfollowUser(@PathVariable("id") Long id, @PathVariable("idToUnfollow") Long idToUnfollow) {
+        return this.userService.unfollowUser(id, idToUnfollow);
+    }
+
 
 
    /*
 
 
-    POST/ PATCH follow(userId, otherUserId)
+
     POST/ PATCH unfollow(userId, otherUserId)
     DELETE deleteUser(userId)*/
 
