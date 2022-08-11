@@ -15,5 +15,5 @@ public interface IUserRepository extends JpaRepository <User, Long> {
             "WHERE users.username LIKE ('%', :username, '%')", nativeQuery = true)
     List<User> findByUsername(String username);*/
 
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 }
