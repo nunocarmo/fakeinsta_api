@@ -21,7 +21,7 @@ public class PostController {
         return this.postService.getAll();
     }
     @PostMapping
-    public PostDto addPost(/*@Valid*/ @RequestBody AddPostDto addPostDto) {
+    public PostDto addPost(@Valid @RequestBody AddPostDto addPostDto) {
         return this.postService.add(addPostDto);
     }
 

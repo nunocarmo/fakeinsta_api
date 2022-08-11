@@ -1,6 +1,8 @@
 package com.insta.api.insta.command.post;
 
 import com.insta.api.insta.command.comment.CommentDto;
+import com.insta.api.insta.command.user.UserDto;
+import com.insta.api.insta.persistence.model.user.User;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -21,5 +23,6 @@ public class PostDto {
     private String photo;
     private String description;
     private String creationDate;
+    private Long userId;
     private List<CommentDto> commentList;
 }

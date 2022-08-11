@@ -45,9 +45,8 @@ public class User {
     @OneToMany(mappedBy="userId")
     private List<Comment> commentList;
 
-
-    //@OneToMany(mappedBy="postId")
-   // private List<Post> addedPosts
+    @OneToMany(mappedBy="userId")
+    private List<Post> postList;
 
    // @OneToMany(mappedBy="to")
   //  private List<Follower> followers = new ArrayList<>();

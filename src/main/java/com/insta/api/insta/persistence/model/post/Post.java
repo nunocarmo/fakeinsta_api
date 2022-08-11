@@ -1,6 +1,7 @@
 package com.insta.api.insta.persistence.model.post;
 
 import com.insta.api.insta.persistence.model.comment.Comment;
+import com.insta.api.insta.persistence.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,6 +27,9 @@ public class Post {
     @Column
     private String creationDate;
 
-    @OneToMany(mappedBy = "postsId")
+    @OneToMany(mappedBy = "postId")
     private List<Comment> commentList;
+    @ManyToOne
+    @JoinColumn(name = "user_id_fk")
+    private User userId;
 }
