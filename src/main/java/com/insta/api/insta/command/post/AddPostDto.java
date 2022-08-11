@@ -19,6 +19,8 @@ public class AddPostDto {
     private Long id = null;
     private String photo;
     private String description;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Long likeCount = 0L;
     @NotNull(message = "user id can't be empty")
     private Long userId;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

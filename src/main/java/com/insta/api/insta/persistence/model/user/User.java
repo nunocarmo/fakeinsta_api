@@ -1,12 +1,12 @@
 package com.insta.api.insta.persistence.model.user;
 
 import com.insta.api.insta.persistence.model.comment.Comment;
-import com.insta.api.insta.persistence.model.follower.Follower;
+import com.insta.api.insta.persistence.model.like.CommentUserLike;
+import com.insta.api.insta.persistence.model.like.PostUserLike;
 import com.insta.api.insta.persistence.model.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -48,7 +48,14 @@ public class User {
     @OneToMany(mappedBy="userId")
     private List<Post> postList;
 
-   // @OneToMany(mappedBy="to")
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
+    private List<PostUserLike> postUserLikeList;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
+    private List<CommentUserLike> commentUserLikeList;
+
+
+    // @OneToMany(mappedBy="to")
   //  private List<Follower> followers = new ArrayList<>();
 
   //  @OneToMany(mappedBy="from")

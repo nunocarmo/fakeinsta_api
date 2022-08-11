@@ -2,15 +2,13 @@ package com.insta.api.insta.controller.comment;
 
 import com.insta.api.insta.command.comment.AddCommentDto;
 import com.insta.api.insta.command.comment.CommentDto;
+import com.insta.api.insta.command.comment.DeleteCommentDto;
 import com.insta.api.insta.command.post.AddPostDto;
 import com.insta.api.insta.command.post.PostDto;
 import com.insta.api.insta.service.comment.ICommentService;
 import com.insta.api.insta.service.post.IPostService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,5 +21,9 @@ public class CommentController {
     @PostMapping
     public CommentDto addComment(@Valid @RequestBody AddCommentDto addCommentDto) {
         return this.commentService.add(addCommentDto);
+    }
+    @DeleteMapping
+    public CommentDto deleteComment(@Valid @RequestBody DeleteCommentDto deleteCommentDto) {
+        return this.commentService.delete(deleteCommentDto);
     }
 }
