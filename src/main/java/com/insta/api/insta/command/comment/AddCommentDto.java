@@ -20,7 +20,9 @@ public class AddCommentDto {
     @NotNull(message = "Can't post an empty comment")
     private String description;
     @NotNull(message = "post id can't be empty")
-    private Long postsId;
+    private Long userId;
+    @NotNull(message = "post id can't be empty")
+    private Long postId;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String creationDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 }

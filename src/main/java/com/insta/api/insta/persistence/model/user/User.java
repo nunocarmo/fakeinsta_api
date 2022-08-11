@@ -1,5 +1,6 @@
 package com.insta.api.insta.persistence.model.user;
 
+import com.insta.api.insta.persistence.model.comment.Comment;
 import com.insta.api.insta.persistence.model.follower.Follower;
 import com.insta.api.insta.persistence.model.post.Post;
 import lombok.*;
@@ -40,6 +41,10 @@ public class User {
 
     @Column(nullable = true, unique = false, updatable = true, length = 64)
     private String profilePhoto;
+
+    @OneToMany(mappedBy="userId")
+    private List<Comment> commentList;
+
 
     //@OneToMany(mappedBy="postId")
    // private List<Post> addedPosts
