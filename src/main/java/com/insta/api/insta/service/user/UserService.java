@@ -106,9 +106,6 @@ public class UserService implements IUserService {
         follower.setFollowed(userToFollow);
         userToFollow.getFollowers().add(follower);
 
-        System.out.println("follower " +followerId + "has this number of follows: "+  userFollower.getFollows().size());
-        System.out.println("followed " +userToFollowId + "has this number of followers: "+  userToFollow.getFollowers().size());
-
         this.followerRepository.save(follower);
         this.userRepository.save(userFollower);
         this.userRepository.save(userToFollow);
