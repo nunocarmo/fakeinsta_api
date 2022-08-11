@@ -66,6 +66,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserDto getUserByUsername(String username) {
-        User user = this.userRepository.findByUsername(username);
+        User user = this.userRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         return this.userConverter.converter(user, UserDto.class); }
 }
