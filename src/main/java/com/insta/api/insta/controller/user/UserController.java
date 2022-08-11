@@ -3,7 +3,6 @@ package com.insta.api.insta.controller.user;
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.service.user.IUserService;
-import com.insta.api.insta.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +20,11 @@ public class UserController {
         return this.userService.getUserById(id);
     }
 
-    @GetMapping("/search/{username}")
-    public List <UserDto> getUserListByUsername(@PathVariable("username") String username) {
-        return this.userService.getUserListByUsername(username);
+    @GetMapping("/search")
+    public List <UserDto> searchUsers(@RequestParam(value = "username", required = false) String username,
+                                      @RequestParam(value = "email", required = false) String email,
+                                      @RequestParam(value = "name", required = false) String name) {
+        return this.userService.searchUsers(username, email, name);
     }
 
    /* @GetMapping("/search/{username}")

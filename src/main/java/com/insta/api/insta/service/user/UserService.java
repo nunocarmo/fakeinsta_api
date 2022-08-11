@@ -58,8 +58,8 @@ public class UserService implements IUserService {
     }
 
    @Override
-    public List <UserDto> getUserListByUsername(String username) {
-       List <User> users = this.userRepository.findUsersByUsername(username);
+    public List <UserDto> searchUsers(String username, String email, String name) {
+       List <User> users = this.userRepository.findUsers(username, email, name);
         return this.userConverter.converterList(users, UserDto.class);
     }
 

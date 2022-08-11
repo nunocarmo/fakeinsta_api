@@ -22,10 +22,10 @@ public class Comment {
     private String description;
     @Column
     private String creationDate;
-    @ManyToOne
-    @JoinColumn(name = "user_id_fk")
-    private User userId;
-    @ManyToOne
-    @JoinColumn(name = "post_id_fk")
-    private Post postId;
+  //  @ManyToOne
+ //   @JoinColumn(name = "user_id_fk")
+  //  private User userId;
+   // @ManyToOne
+  //  @JoinColumn(name = "post_id_fk")
+   // private Post postId;
 }

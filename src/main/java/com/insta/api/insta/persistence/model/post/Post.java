@@ -26,6 +26,6 @@ public class Post {
     @Column
     private String creationDate;
 
-    @OneToMany(mappedBy = "postsId")
-    private List<Comment> commentList;
+   // @OneToMany(mappedBy = "postsId")
+   // private List<Comment> commentList;
 }
