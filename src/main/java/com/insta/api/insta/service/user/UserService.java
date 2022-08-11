@@ -1,5 +1,7 @@
 package com.insta.api.insta.service.user;
 
+import com.insta.api.insta.command.follower.AddFollowerDto;
+import com.insta.api.insta.command.follower.FollowerDto;
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.converter.user.IUserConverter;
@@ -9,6 +11,8 @@ import com.insta.api.insta.persistence.model.user.User;
 import com.insta.api.insta.persistence.repository.follower.IFollowerRepository;
 import com.insta.api.insta.persistence.repository.user.IUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -79,26 +83,32 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDto followUser(Long id, Long idToFollow) {
-        if(id == idToFollow) {
+    public ResponseEntity followUser(AddFollowerDto addfollowerDto) {
+        if(addfollowerDto.getToFollowUserId() == addfollowerDto.getFollowerUserId()) {
             throw new BadRequestException(CANNOT_FOLLOW_YOURSELF);
         }
-        User user = this.userRepository.findById(id)
+        Long followerId = addfollowerDto.getFollowerUserId();
+        Long userToFollowId = addfollowerDto.getToFollowUserId();
+
+        User userFollower = this.userRepository.findById(followerId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
-        User userToFollow = this.userRepository.findById(idToFollow)
+        User userToFollow = this.userRepository.findById(userToFollowId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
-        if(!this.followerRepository.checkIfUserFollowsAlready(id, idToFollow).isEmpty()) {
+        if(!this.followerRepository.checkIfUserFollowsAlready(followerId, userToFollowId).isEmpty()) {
             throw new ConflictException(FOLLOW_ALREADY);
         }
+
         Follower follower = new Follower();
+        follower.setFollowerUser(userFollower);
         follower.setFollowed(userToFollow);
-        follower.setFollowerUser(user);
+
         this.followerRepository.save(follower);
 
-        this.userRepository.save(user);
+        this.userRepository.save(userFollower);
         this.userRepository.save(userToFollow);
-        return this.userConverter.converter(user, UserDto.class);
+
+        return new ResponseEntity<>("User with ID " + followerId + " started to follow user with ID " + userToFollowId, HttpStatus.OK);
     }
 
     @Override
