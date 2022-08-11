@@ -21,14 +21,14 @@ public class UserController {
         return this.userService.getUserById(id);
     }
 
-/*    @GetMapping("/search/{username}")
-    public List <UserDto> getUserByUsername(@PathVariable("username") String username) {
-        return this.userService.getUserByUsername(username);
-    }*/
-
     @GetMapping("/search/{username}")
+    public List <UserDto> getUserListByUsername(@PathVariable("username") String username) {
+        return this.userService.getUserListByUsername(username);
+    }
+
+   /* @GetMapping("/search/{username}")
     public UserDto getUserByUsername(@PathVariable("username") String username) {
-        return this.userService.getUserByUsername(username);}
+        return this.userService.getUserByUsername(username);}*/
 
     @GetMapping()
     public List<UserDto> getAllUsers() {

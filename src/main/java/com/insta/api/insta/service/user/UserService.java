@@ -7,7 +7,6 @@ import com.insta.api.insta.exception.*;
 import com.insta.api.insta.persistence.model.user.User;
 import com.insta.api.insta.persistence.repository.user.IUserRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,11 +57,11 @@ public class UserService implements IUserService {
                 this.userRepository.save(updatedUser), UserDto.class);
     }
 
-/*    @Override
-    public List <UserDto> getUserByUsername(String username) {
-       List <User> users = this.userRepository.findByUsername(username);
+   @Override
+    public List <UserDto> getUserListByUsername(String username) {
+       List <User> users = this.userRepository.findUsersByUsername(username);
         return this.userConverter.converterList(users, UserDto.class);
-    }*/
+    }
 
     @Override
     public UserDto getUserByUsername(String username) {

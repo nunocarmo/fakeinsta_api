@@ -16,5 +16,7 @@ public interface IUserService {
 
    // List <UserDto> getUserByUsername(String username);
 
+    List <UserDto> getUserListByUsername(String username);
+
     UserDto getUserByUsername(String username);
 }
