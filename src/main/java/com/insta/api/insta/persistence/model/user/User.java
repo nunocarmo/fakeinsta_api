@@ -1,9 +1,11 @@
 package com.insta.api.insta.persistence.model.user;
 
+import com.insta.api.insta.persistence.model.follower.Follower;
 import com.insta.api.insta.persistence.model.post.Post;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -43,9 +45,9 @@ public class User {
     private List<Post> addedPosts;
 
     @OneToMany(mappedBy="to")
-    private List<Follower> followers;
+    private List<Follower> followers = new ArrayList<>();
 
     @OneToMany(mappedBy="from")
-    private List<Follower> following;
+    private List<Follower> following = new ArrayList<>();
 
 }

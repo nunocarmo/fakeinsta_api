@@ -1,5 +1,6 @@
-package com.insta.api.insta.persistence.model.user;
+package com.insta.api.insta.persistence.model.follower;
 
+import com.insta.api.insta.persistence.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
