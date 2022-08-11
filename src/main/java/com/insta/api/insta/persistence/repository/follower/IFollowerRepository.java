@@ -9,8 +9,26 @@ import java.util.List;
 
 @Repository
 public interface IFollowerRepository extends JpaRepository <Follower, Long> {
-    @Query(value = "SELECT * \n" +
+
+    @Query(value = "SELECT *\n" +
+            "FROM followers \n" +
+            "INNER JOIN\n" +
+            "users \n" +
+            "ON followers.from_user_fk = users.id\n" +
+            "WHERE users.id = :id", nativeQuery = true)
+
+    /*@Query(value = "SELECT * \n" +
             "FROM followers\n" +
-            "WHERE followers.to.id = :id" , nativeQuery = true)
+            "WHERE followers.from_user_fk = :id" , nativeQuery = true)*/
     List<Follower> findFollowersByUserId(Long id);
+
+
+
+    @Query(value = "SELECT *\n" +
+            "FROM followers \n" +
+            "INNER JOIN\n" +
+            "users \n" +
+            "ON followers.to_user_fk = users.id\n" +
+            "WHERE users.id = :id", nativeQuery = true)
+    List<Follower> findFollowsByUserId(Long id);
 }

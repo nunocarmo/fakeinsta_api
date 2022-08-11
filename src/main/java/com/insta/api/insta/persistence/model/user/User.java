@@ -2,6 +2,7 @@ package com.insta.api.insta.persistence.model.user;
 
 import com.insta.api.insta.persistence.model.comment.Comment;
 import com.insta.api.insta.persistence.model.follower.Follower;
+import com.insta.api.insta.persistence.model.follower.Follow;
 import com.insta.api.insta.persistence.model.post.Post;
 import lombok.*;
 
@@ -48,12 +49,10 @@ public class User {
     @OneToMany(mappedBy = "userId")
     private List<Post> postList;
 
-   //@OneToMany(mappedBy = "id")
-   // private List<Follower> followers = new ArrayList<>();
+   @OneToMany(mappedBy = "from")
+    private List<Follower> followers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "id")
-    private List<Follower> following = new ArrayList<>();
-
-    //relations
+    @OneToMany(mappedBy = "to")
+    private List<Follower> follows = new ArrayList<>();
 
 }

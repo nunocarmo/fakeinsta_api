@@ -14,9 +14,9 @@ public interface IUserService {
 
     UserDto updateUser(Long id, UserUpdateDto userUpdateDto);
 
-   // List <UserDto> getUserByUsername(String username);
-
     List <UserDto> searchUsers(String username, String email, String name);
 
     UserDto getUserByUsername(String username);
+
+    UserDto followUser(Long id, Long idToFollow);
 }

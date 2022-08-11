@@ -1,5 +1,6 @@
 package com.insta.api.insta.controller.user;
 
+import com.insta.api.insta.command.follower.FollowDto;
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.service.user.IUserService;
@@ -42,12 +43,16 @@ public class UserController {
         return this.userService.updateUser(id, userUpdateDto);
     }
 
+    @PatchMapping("/{id}/follow/{idToFollow}")
+    public UserDto followUser(@PathVariable("id") Long id, @PathVariable("idToFollow") Long idToFollow) {
+        return this.userService.followUser(id, idToFollow);
+    }
+
 
 
    /*
 
-    GET getAllFollowers(userId)
-    GET getAllFollows(userId)
+
     POST/ PATCH follow(userId, otherUserId)
     POST/ PATCH unfollow(userId, otherUserId)
     DELETE deleteUser(userId)*/

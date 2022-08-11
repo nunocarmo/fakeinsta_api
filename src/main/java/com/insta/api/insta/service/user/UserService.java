@@ -5,7 +5,9 @@ import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.converter.user.IUserConverter;
 import com.insta.api.insta.converter.user.UserConverter;
 import com.insta.api.insta.exception.*;
+import com.insta.api.insta.persistence.model.follower.Follow;
 import com.insta.api.insta.persistence.model.user.User;
+import com.insta.api.insta.persistence.repository.follower.IFollowRepository;
 import com.insta.api.insta.persistence.repository.user.IUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class UserService implements IUserService {
 
     private IUserRepository userRepository;
     private IUserConverter userConverter;
+
+    private IFollowRepository followRepository;
 
     @Override
     public UserDto getUserById(Long id) {
@@ -69,4 +73,24 @@ public class UserService implements IUserService {
         User user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         return this.userConverter.converter(user, UserDto.class); }
+
+    @Override
+    public UserDto followUser(Long id, Long idToFollow) {
+        User user = this.userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        User userToFollow = this.userRepository.findById(idToFollow)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+/*
+        Follow newFollow = new Follow();
+        newFollow.setTo(userToFollow);
+        this.followRepository.save(newFollow);
+        user.getFollows().add(newFollow);
+*/
+
+
+       // userToFollow.getFollowers().add(user);
+
+        this.userRepository.save(user);
+        return null;
+    }
 }
