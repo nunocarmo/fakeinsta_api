@@ -42,7 +42,7 @@ public class User {
     private String profilePhoto;
 
     //@OneToMany(mappedBy="postId")
-   // private List<Post> addedPosts;
+   // private List<Post> addedPosts
 
    // @OneToMany(mappedBy="to")
   //  private List<Follower> followers = new ArrayList<>();
