@@ -2,6 +2,7 @@ package com.insta.api.insta.service.user;
 
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
+import com.insta.api.insta.converter.user.IUserConverter;
 import com.insta.api.insta.converter.user.UserConverter;
 import com.insta.api.insta.exception.*;
 import com.insta.api.insta.persistence.model.user.User;
@@ -18,7 +19,7 @@ import static com.insta.api.insta.exception.ExceptionMessages.*;
 public class UserService implements IUserService {
 
     private IUserRepository userRepository;
-    private UserConverter userConverter;
+    private IUserConverter userConverter;
 
     @Override
     public UserDto getUserById(Long id) {

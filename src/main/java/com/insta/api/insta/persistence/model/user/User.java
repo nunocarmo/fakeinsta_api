@@ -48,10 +48,10 @@ public class User {
     @OneToMany(mappedBy = "userId")
     private List<Post> postList;
 
-    @OneToMany(mappedBy = "to")
-    private List<Follower> followers = new ArrayList<>();
+   //@OneToMany(mappedBy = "id")
+   // private List<Follower> followers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "from")
+    @OneToMany(mappedBy = "id")
     private List<Follower> following = new ArrayList<>();
 
     //relations

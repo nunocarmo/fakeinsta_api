@@ -2,6 +2,8 @@ package com.insta.api.insta.persistence.model.follower;
 
 import com.insta.api.insta.persistence.model.user.User;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import net.bytebuddy.implementation.bind.annotation.Super;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +14,6 @@ import java.util.List;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "followers")
 public class Follower {
