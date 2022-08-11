@@ -1,4 +1,7 @@
 package com.insta.api.insta.persistence.repository.user;
 
-public interface IUserRepository {
+import com.insta.api.insta.persistence.model.user.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IUserRepository extends JpaRepository <User, Long> {
 }
