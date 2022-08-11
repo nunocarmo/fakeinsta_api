@@ -7,13 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface IUserRepository extends JpaRepository <User, Long> {
+public interface IUserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
-/*    @Query(value = "SELECT * \n" +
+    @Query(value = "SELECT * \n" +
             "FROM users\n" +
-            "WHERE users.username LIKE ('%', :username, '%')", nativeQuery = true)
-    List<User> findByUsername(String username);*/
+            "WHERE (LOWER(users.username) LIKE (LOWER(CONCAT('%', :username, '%'))) OR :username ISNULL) \n" +
+            "AND (LOWER(users.email) LIKE LOWER(CONCAT('%',:email,'%')) OR :email ISNULL) \n" +
+            "AND(LOWER(users.name) LIKE LOWER(CONCAT('%',:name,'%')) OR :name ISNULL)", nativeQuery = true)
+    List<User> findUsers(String username, String email, String name);
 
     Optional<User> findByUsername(String username);
 }
