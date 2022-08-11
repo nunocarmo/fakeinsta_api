@@ -27,10 +27,6 @@ public class UserController {
         return this.userService.searchUsers(username, email, name);
     }
 
-   /* @GetMapping("/search/{username}")
-    public UserDto getUserByUsername(@PathVariable("username") String username) {
-        return this.userService.getUserByUsername(username);}*/
-
     @GetMapping()
     public List<UserDto> getAllUsers() {
         return this.userService.getAllUsers();
@@ -51,8 +47,6 @@ public class UserController {
     GET getAllFollowers(userId)
     GET getAllFollows(userId)
     Login JWT
-   DONE PATCH updateUserDetails(request body): para o password, username, email
-   DONE PATCH updateUserProfile(request body): para descrição, nome completo, foto
     POST/ PATCH follow(userId, otherUserId)
     POST/ PATCH unfollow(userId, otherUserId)
     DELETE deleteUser(userId)*/

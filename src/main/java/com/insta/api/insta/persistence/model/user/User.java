@@ -54,4 +54,6 @@ public class User {
   //  @OneToMany(mappedBy="from")
   //  private List<Follower> following = new ArrayList<>();
 
+    //relations
+
 }
