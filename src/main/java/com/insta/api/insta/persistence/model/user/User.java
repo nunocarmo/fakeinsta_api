@@ -5,6 +5,7 @@ import com.insta.api.insta.persistence.model.like.CommentUserLike;
 import com.insta.api.insta.persistence.model.like.PostUserLike;
 import com.insta.api.insta.persistence.model.post.Post;
 import com.insta.api.insta.persistence.model.follower.Follower;
+import com.insta.api.insta.persistence.model.role.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, unique = true, updatable = false)
     private Long id;
+
+  //  @Column(nullable = false, unique = false, updatable = false)
+   // private Role role;
 
     @Column(nullable = false, unique = false, updatable = true)
     private String name;

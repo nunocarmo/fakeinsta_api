@@ -7,6 +7,7 @@ import com.insta.api.insta.persistence.repository.user.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class Dataloader implements ApplicationRunner {
     private final IUserRepository userRepository;
     private final IPostRepository postRepository;
     private final ICommentRepository commentRepository;
+    private final PasswordEncoder encoder;
 
 
     @Override
@@ -26,7 +28,7 @@ public class Dataloader implements ApplicationRunner {
         User user1 = User.builder()
                 .name("Ala Kropa")
                 .username("alakropa")
-                .password("password")
+                .password(encoder.encode("password"))
                 .email("alakropa@mail.com")
                 .profilePhoto("a photo")
                 .description("alakropa@mail.com")
@@ -34,7 +36,7 @@ public class Dataloader implements ApplicationRunner {
         User user2 = User.builder()
                 .name("Nuno Carmo")
                 .username("nuno")
-                .password("password")
+                .password(encoder.encode("password"))
                 .email("nuno@mail.com")
                 .profilePhoto("a photo")
                 .description("yesyes")
