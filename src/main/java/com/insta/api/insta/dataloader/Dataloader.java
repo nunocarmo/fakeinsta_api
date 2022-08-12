@@ -49,6 +49,7 @@ public class Dataloader implements ApplicationRunner {
         addPostsToDB(posts,postsFromDb);
 
 
+
         List<Comment> comments = getComments(usersFromDb, postsFromDb);
         addCommentsToDB(comments);
 
