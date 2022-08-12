@@ -31,51 +31,52 @@ public class PostService implements IPostService {
 
     @Override
     public List<PostDto> getAll() {
-        System.out.println(user.getLoggedUser().getName());
         return postConverter.converterList(postRepository.findAll(), PostDto.class);
     }
 
     @Override
     public PostDto add(AddPostDto addPostDto) {
+        addPostDto.setUserId(user.getLoggedUser().getId());
         Post newPost = this.postConverter.converter(addPostDto, Post.class);
-        for (int i = 0; i < newPost.getTagList().size(); i++) {
-            newPost.getTagList().set(i,this.tagRepository.findByTag(newPost.getTagList().get(i).getTag())
-                    .orElseThrow(()-> new NotFoundException(TAG_NOT_FOUND)));
+        if (newPost.getTagList() != null) {
+            for (int i = 0; i < newPost.getTagList().size(); i++) {
+                newPost.getTagList().set(i, this.tagRepository.findByTag(newPost.getTagList().get(i).getTag())
+                        .orElseThrow(() -> new NotFoundException(TAG_NOT_FOUND)));
+            }
         }
-
         return this.postConverter.converter(this.postRepository.save(newPost), PostDto.class);
     }
 
     @Override
     public ResponseEntity<Object> delete(DeletePostDto deletePostDto) {
-       Post post = this.postRepository.findById(deletePostDto.getPostId())
-               .orElseThrow(()-> new NotFoundException(POST_NOT_FOUND));
-       if(!post.getUserId().getId().equals(deletePostDto.getUserId())){
-           throw new NotFoundException(POST_NOT_FROM_USER);
-       }
+        Post post = this.postRepository.findById(deletePostDto.getPostId())
+                .orElseThrow(() -> new NotFoundException(POST_NOT_FOUND));
+        if (!post.getUserId().getId().equals(user.getLoggedUser().getId())) {
+            throw new NotFoundException(POST_NOT_FROM_USER);
+        }
         this.postRepository.delete(post);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
     public List<PostDto> searchByTag(String tag) {
-       Optional<Tag> tagSearch = this.tagRepository.findByTag(tag);
-       if(tagSearch.isEmpty()){
+        Optional<Tag> tagSearch = this.tagRepository.findByTag(tag);
+        if (tagSearch.isEmpty()) {
             return new ArrayList<>();
         }
         List<Post> posts = this.postRepository.searchByTag(tagSearch.get().getId());
-        return this.postConverter.converterList(posts,PostDto.class);
+        return this.postConverter.converterList(posts, PostDto.class);
     }
 
     @Override
     public PostDto getPostById(Long id) {
-       Post post = this.postRepository.findById(id).orElseThrow(()-> new NotFoundException(POST_NOT_FOUND));
-        return this.postConverter.converter(post,PostDto.class);
+        Post post = this.postRepository.findById(id).orElseThrow(() -> new NotFoundException(POST_NOT_FOUND));
+        return this.postConverter.converter(post, PostDto.class);
     }
 
     @Override
     public List<PostDto> searchPostsByUserName(String name) {
         List<Post> posts = this.postRepository.searchPostsByUserName(name);
-        return this.postConverter.converterList(posts,PostDto.class);
+        return this.postConverter.converterList(posts, PostDto.class);
     }
 }

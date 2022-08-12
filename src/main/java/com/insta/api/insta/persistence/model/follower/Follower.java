@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@Builder
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +17,7 @@ import javax.persistence.*;
 public class Follower {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne

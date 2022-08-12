@@ -16,6 +16,6 @@ public class InPostUserLikeDto {
     private Long id = null;
     @NotNull(message = "post id can't be empty")
     private Long postId;
-    @NotNull(message = "post id can't be empty")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long userId;
 }
