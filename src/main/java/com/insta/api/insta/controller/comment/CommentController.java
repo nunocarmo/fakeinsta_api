@@ -8,6 +8,7 @@ import com.insta.api.insta.command.post.PostDto;
 import com.insta.api.insta.service.comment.ICommentService;
 import com.insta.api.insta.service.post.IPostService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,7 +24,7 @@ public class CommentController {
         return this.commentService.add(addCommentDto);
     }
     @DeleteMapping
-    public CommentDto deleteComment(@Valid @RequestBody DeleteCommentDto deleteCommentDto) {
+    public ResponseEntity<Object> deleteComment(@Valid @RequestBody DeleteCommentDto deleteCommentDto) {
         return this.commentService.delete(deleteCommentDto);
     }
 }

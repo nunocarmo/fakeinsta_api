@@ -16,6 +16,6 @@ public class InCommentUserLikeDto {
     private Long id = null;
     @NotNull(message = "comment id can't be empty")
     private Long commentId;
-    @NotNull(message = "user id can't be empty")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long userId;
 }

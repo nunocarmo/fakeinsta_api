@@ -20,7 +20,7 @@ public class AddCommentDto {
 
     @NotNull(message = "Can't post an empty comment")
     private String description;
-    @NotNull(message = "user id can't be empty")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long userId;
     @NotNull(message = "post id can't be empty")
     private Long postId;
