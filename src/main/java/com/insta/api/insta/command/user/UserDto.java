@@ -2,7 +2,6 @@ package com.insta.api.insta.command.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.insta.api.insta.command.comment.CommentIdDto;
-import com.insta.api.insta.command.like.UserLikeDto;
 import com.insta.api.insta.command.post.PostIdDto;
 import com.insta.api.insta.command.post.PostLessInfDto;
 import lombok.*;
