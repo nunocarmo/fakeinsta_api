@@ -5,6 +5,7 @@ public class ExceptionMessages {
     public static final String USER_NOT_FOUND = "User not found";
     public static final String AT_LEAST_1_PARAMETER = "You need at least 1 search parameter";
     public static final String EMAIL_REGISTERED = "Email is already being used";
+    public static final String USERNAME_REGISTERED = "Username is already being used";
     public static final String EMPTY_NAME = "Name cannot be empty";
     public static final String CANNOT_FOLLOW_YOURSELF = "You cannot follow yourself";
     public static final String CANNOT_UNFOLLOW_YOURSELF = "You cannot unfollow yourself";
