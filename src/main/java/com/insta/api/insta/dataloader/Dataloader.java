@@ -22,23 +22,29 @@ public class Dataloader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        List<User> users = List.of(
+                User.builder()
+                        .name("Ala Kropa")
+                        .username("alakropa")
+                        .password("password")
+                        .email("alakropa@mail.com")
+                        .profilePhoto("a photo")
+                        .description("alakropa@mail.com")
+                        .build()
+                ,
+                User.builder()
+                        .name("Nuno Carmo")
+                        .username("nuno")
+                        .password("password")
+                        .email("nuno@mail.com")
+                        .profilePhoto("a photo")
+                        .description("yesyes")
+                        .build());
 
-        User user1 = User.builder()
-                .name("Ala Kropa")
-                .username("alakropa")
-                .password("password")
-                .email("alakropa@mail.com")
-                .profilePhoto("a photo")
-                .description("alakropa@mail.com")
-                .build();
-        User user2 = User.builder()
-                .name("Nuno Carmo")
-                .username("nuno")
-                .password("password")
-                .email("nuno@mail.com")
-                .profilePhoto("a photo")
-                .description("yesyes")
-                .build();
-        this.userRepository.saveAll(List.of(user1,user2));
+        users.forEach(user -> {
+            if (this.userRepository.findByEmail(user.getEmail()).isEmpty()) {
+                this.userRepository.save(user);
+            }
+        });
     }
 }

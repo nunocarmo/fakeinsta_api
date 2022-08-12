@@ -32,5 +32,17 @@ public class PostController {
     public ResponseEntity<Object> deletePost(@Valid @RequestBody DeletePostDto deletePostDto) {
         return this.postService.delete(deletePostDto);
     }
+    @GetMapping("/search/tag")
+    public List<PostDto> getPostsByTag(@RequestParam(value = "tag") String tag) {
+        return this.postService.searchByTag(tag);
+    }
+    @GetMapping("/{id}")
+    public PostDto getPostById(@PathVariable("id") Long id) {
+        return this.postService.getPostById(id);
+    }
 
+    @GetMapping("/search")
+    public List<PostDto> getPostById(@RequestParam(value = "name") String name) {
+        return this.postService.searchPostsByUserName(name);
+    }
 }

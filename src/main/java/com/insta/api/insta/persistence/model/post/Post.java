@@ -2,6 +2,7 @@ package com.insta.api.insta.persistence.model.post;
 
 import com.insta.api.insta.persistence.model.comment.Comment;
 import com.insta.api.insta.persistence.model.like.PostUserLike;
+import com.insta.api.insta.persistence.model.tag.Tag;
 import com.insta.api.insta.persistence.model.user.User;
 import lombok.*;
 
@@ -34,4 +35,12 @@ public class Post {
 
     @OneToMany(mappedBy = "postId", cascade = CascadeType.REMOVE)
     private List<PostUserLike> postUserLikeList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tag_post_list",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tagList;
 }

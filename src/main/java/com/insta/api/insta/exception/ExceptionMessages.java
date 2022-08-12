@@ -11,4 +11,11 @@ public class ExceptionMessages {
     public static final String FOLLOW_ALREADY = "You follow this user already";
 
     public static final String HAVE_NOT_FOLLOWED = "You have not followed this user";
+
+
+    public static final String POST_NOT_FOUND = "Post Not Found";
+    public static final String POST_NOT_FROM_USER = "This Post Is Not From This User";
+    public static final String TAG_NOT_FOUND = "Tag Not Found";
+    public static final String LIKE_NOT_FOUND = "Like Not Found";
+    public static final String COMMENT_NOT_FROM_USER = "This Comment Is Not From This User";
 }

@@ -13,4 +13,10 @@ public interface IPostService {
     PostDto add(AddPostDto addPostDto);
 
     ResponseEntity<Object> delete(DeletePostDto deletePostDto);
+
+    List<PostDto> searchByTag(String tag);
+
+    PostDto getPostById(Long id);
+
+    List<PostDto> searchPostsByUserName(String name);
 }

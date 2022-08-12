@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.html.HTMLTableRowElement;
 
+import static com.insta.api.insta.exception.ExceptionMessages.COMMENT_NOT_FROM_USER;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService implements ICommentService{
@@ -26,7 +28,7 @@ public class CommentService implements ICommentService{
     public CommentDto delete(DeleteCommentDto deleteCommentDto) {
         Comment comment = this.commentRepository.findById(deleteCommentDto.getCommentId()).get();
         if(!comment.getUserId().getId().equals(deleteCommentDto.getUserId())){
-            throw new NotFoundException("Comment From this User Doesn't exist");
+            throw new NotFoundException(COMMENT_NOT_FROM_USER);
         }
         CommentDto commentDto = this.commentConverter.converter(comment,CommentDto.class);
         this.commentRepository.delete(comment);
