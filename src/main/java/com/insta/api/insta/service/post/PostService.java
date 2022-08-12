@@ -9,6 +9,7 @@ import com.insta.api.insta.persistence.model.post.Post;
 import com.insta.api.insta.persistence.model.tag.Tag;
 import com.insta.api.insta.persistence.repository.post.IPostRepository;
 import com.insta.api.insta.persistence.repository.tag.ITagRepository;
+import com.insta.api.insta.security.LoggedUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,11 @@ public class PostService implements IPostService {
     private final IPostRepository postRepository;
     private final ITagRepository tagRepository;
     private final IPostConverter postConverter;
+    private final LoggedUser user;
 
     @Override
     public List<PostDto> getAll() {
+        System.out.println(user.getLoggedUser().getName());
         return postConverter.converterList(postRepository.findAll(), PostDto.class);
     }
 

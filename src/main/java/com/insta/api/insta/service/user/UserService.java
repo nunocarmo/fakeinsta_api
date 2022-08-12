@@ -10,6 +10,7 @@ import com.insta.api.insta.persistence.model.follower.Follower;
 import com.insta.api.insta.persistence.model.user.User;
 import com.insta.api.insta.persistence.repository.follower.IFollowerRepository;
 import com.insta.api.insta.persistence.repository.user.IUserRepository;
+import com.insta.api.insta.security.LoggedUser;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +29,10 @@ public class UserService implements IUserService {
     private IUserConverter userConverter;
 
     private IFollowerRepository followerRepository;
-
+    private final LoggedUser users;
     @Override
     public UserDto getUserById(Long id) {
-        User user = this.userRepository.findById(id)
+        User user = this.userRepository.findById(users.getLoggedUser().getId())
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         return this.userConverter.converter(user, UserDto.class);
     }
