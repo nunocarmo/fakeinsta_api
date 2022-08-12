@@ -17,16 +17,12 @@ public class UserUpdateDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
-
     @Size(min = 1, max = 35)
     private String name;
-
     @Size(min = 3, max = 20)
     private String username;
-
     @Size(min = 8, max = 35)
     private String password;
-
     @Email
     @Size(max = 40)
     private String email;
