@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import static com.insta.api.insta.exception.ExceptionMessages.LIKE_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class CommentUserLikeService implements ICommentUserLikeService {
@@ -28,7 +30,7 @@ public class CommentUserLikeService implements ICommentUserLikeService {
     public ResponseEntity<Object> delete(InCommentUserLikeDto removeLikeFromComment) {
         CommentUserLike like = this.commentUserLikeRepository
                 .findLikeFromCommentAndUser(removeLikeFromComment.getCommentId(),removeLikeFromComment.getUserId())
-                .orElseThrow(() -> new NotFoundException("error"));
+                .orElseThrow(() -> new NotFoundException(LIKE_NOT_FOUND));
         this.commentUserLikeRepository.delete(like);
         return new ResponseEntity<>(HttpStatus.OK);
     }
