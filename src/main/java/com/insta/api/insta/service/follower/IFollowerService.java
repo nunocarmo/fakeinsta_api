@@ -10,6 +10,5 @@ public interface IFollowerService {
     List<UserDto> getFollowsByUserId(Long id);
 
     List<UserDto> getFollowersOfLoggedUser();
-
     List<UserDto> getFollowsOfLoggedUser();
 }
