@@ -42,6 +42,12 @@ public class UserService implements IUserService {
                 .ifPresent(user -> {
                     throw new ConflictException(EMAIL_REGISTERED);
                 });
+
+        this.userRepository.findByUsername(userDto.getUsername())
+                .ifPresent(user -> {
+                    throw new ConflictException(USERNAME_REGISTERED);
+                });
+
         User user = this.userConverter.converter(userDto, User.class);
         //  user.setPassword(encoder.encode(user.getPassword()));
         this.userRepository.save(user);
@@ -58,6 +64,22 @@ public class UserService implements IUserService {
     public UserDto updateUser(Long id, UserUpdateDto userUpdateDto) {
         User user = this.userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+
+      this.userRepository.findByEmail(userUpdateDto.getEmail()).ifPresent(
+              userEmail -> {
+                  if(userEmail != user) {
+                      throw new BadRequestException(EMAIL_REGISTERED);
+                  }
+              }
+      );
+        this.userRepository.findByUsername(userUpdateDto.getUsername()).ifPresent(
+                userUsername -> {
+                    if(userUsername != user) {
+                        throw new BadRequestException(USERNAME_REGISTERED);
+                    }
+                }
+        );
+
        /* if (userUpdateDto.getPassword() != null) {
             userUpdateDto.setPassword(encoder.encode(userUpdateDto.getPassword()));
         }*/

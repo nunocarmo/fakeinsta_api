@@ -44,13 +44,13 @@ public class User {
     @Column(nullable = true, unique = false, updatable = true, length = 64)
     private String profilePhoto;
 
-    @OneToMany(mappedBy="userId")
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
 
-    @OneToMany(mappedBy="userId")
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
     private List<Post> postList;
 
-   @OneToMany(mappedBy = "followerUser")
+    @OneToMany(mappedBy = "followerUser")
     private List<Follower> followers = new ArrayList<>();
 
     @OneToMany(mappedBy = "followed")
