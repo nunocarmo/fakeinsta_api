@@ -1,6 +1,4 @@
 package com.insta.api.insta.service.follower;
-
-import com.insta.api.insta.command.follower.FollowerDto;
 import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.converter.follower.IFollowerConverter;
 import com.insta.api.insta.persistence.model.follower.Follower;
