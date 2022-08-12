@@ -19,9 +19,9 @@ public class UserController {
 
     private IUserService userService;
 
-    @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable("id") Long id) {
-        return this.userService.getUserById(id);
+    @GetMapping()
+    public UserDto getUserById() {
+        return this.userService.getUserById();
     }
 
     @GetMapping("/search")
@@ -30,7 +30,7 @@ public class UserController {
                                       @RequestParam(value = "name", required = false) String name) {
         return this.userService.searchUsers(username, email, name);
     }
-    @GetMapping()
+    @GetMapping("/admin")
     public List<UserDto> getAllUsers() {
         return this.userService.getAllUsers();
     }
@@ -40,9 +40,9 @@ public class UserController {
         return this.userService.registerUser(userDto);
     }
 
-    @PatchMapping("/{id}")
-    public UserDto updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserUpdateDto userUpdateDto) {
-        return this.userService.updateUser(id, userUpdateDto);
+    @PatchMapping()
+    public UserDto updateUser(@Valid @RequestBody UserUpdateDto userUpdateDto) {
+        return this.userService.updateUser(userUpdateDto);
     }
 
     @PatchMapping("/follow")
@@ -55,8 +55,15 @@ public class UserController {
         return this.userService.unfollowUser(unfollowDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     public ResponseEntity deleteUser(@PathVariable("id") Long id) {
         return this.userService.deleteUser(id);
     }
+
+    @DeleteMapping()
+    public ResponseEntity deleteUser() {
+        return this.userService.deleteUser();
+    }
+
+
 }

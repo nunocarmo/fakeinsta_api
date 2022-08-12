@@ -14,6 +14,7 @@ import com.insta.api.insta.security.LoggedUser;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,10 +30,11 @@ public class UserService implements IUserService {
     private IUserConverter userConverter;
 
     private IFollowerRepository followerRepository;
-    private final LoggedUser users;
+    private final LoggedUser loggedUser;
+    private final PasswordEncoder encoder;
     @Override
-    public UserDto getUserById(Long id) {
-        User user = this.userRepository.findById(users.getLoggedUser().getId())
+    public UserDto getUserById() {
+        User user = this.userRepository.findById(loggedUser.getLoggedUser().getId())
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         return this.userConverter.converter(user, UserDto.class);
     }
@@ -50,7 +52,7 @@ public class UserService implements IUserService {
                 });
 
         User user = this.userConverter.converter(userDto, User.class);
-        //  user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(encoder.encode(user.getPassword()));
         this.userRepository.save(user);
         return this.userConverter.converter(user, UserDto.class);
     }
@@ -62,29 +64,27 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDto updateUser(Long id, UserUpdateDto userUpdateDto) {
-        User user = this.userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+    public UserDto updateUser(UserUpdateDto userUpdateDto) {
 
       this.userRepository.findByEmail(userUpdateDto.getEmail()).ifPresent(
               userEmail -> {
-                  if(userEmail != user) {
+                  if(userEmail != loggedUser.getLoggedUser()) {
                       throw new BadRequestException(EMAIL_REGISTERED);
                   }
               }
       );
         this.userRepository.findByUsername(userUpdateDto.getUsername()).ifPresent(
                 userUsername -> {
-                    if(userUsername != user) {
+                    if(userUsername != loggedUser.getLoggedUser()) {
                         throw new BadRequestException(USERNAME_REGISTERED);
                     }
                 }
         );
 
-       /* if (userUpdateDto.getPassword() != null) {
+        if (userUpdateDto.getPassword() != null) {
             userUpdateDto.setPassword(encoder.encode(userUpdateDto.getPassword()));
-        }*/
-        User updatedUser = this.userConverter.converterUpdate(userUpdateDto, user);
+        }
+        User updatedUser = this.userConverter.converterUpdate(userUpdateDto, loggedUser.getLoggedUser());
         return this.userConverter.converter(
                 this.userRepository.save(updatedUser), UserDto.class);
     }
@@ -108,20 +108,19 @@ public class UserService implements IUserService {
 
     @Override
     public ResponseEntity followUser(FollowDto followDto) {
-        if(followDto.getToFollowUserId() == followDto.getFollowerUserId()) {
+        if(followDto.getToFollowUserId() == loggedUser.getLoggedUser().getId()) {
             throw new BadRequestException(CANNOT_FOLLOW_YOURSELF);
         }
-        Long followerId = followDto.getFollowerUserId();
+        Long followerId = loggedUser.getLoggedUser().getId();
         Long userToFollowId = followDto.getToFollowUserId();
 
-        User userFollower = this.userRepository.findById(followerId)
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        User userFollower = loggedUser.getLoggedUser();
         User userToFollow = this.userRepository.findById(userToFollowId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
-        if(!this.followerRepository.checkIfUserFollowsAlready(followerId, userToFollowId).isEmpty()) {
-            throw new ConflictException(FOLLOW_ALREADY);
-        }
+       if(!this.followerRepository.checkIfUserFollowsAlready(followerId, userToFollowId).isEmpty()) {
+           throw new ConflictException(FOLLOW_ALREADY);
+       }
         Follower follower = new Follower();
         follower.setFollowerUser(userFollower);
         userFollower.getFollows().add(follower);
@@ -138,14 +137,14 @@ public class UserService implements IUserService {
 
     @Override
     public ResponseEntity unfollowUser(UnfollowDto unfollowDto) {
-        if(unfollowDto.getToUnfollowUserId() == unfollowDto.getFollowerUserId()) {
+        if(unfollowDto.getToUnfollowUserId() == loggedUser.getLoggedUser().getId()) {
             throw new BadRequestException(CANNOT_UNFOLLOW_YOURSELF);
         }
-        Long followerId = unfollowDto.getFollowerUserId();
+        Long followerId = loggedUser.getLoggedUser().getId();
         Long userToUnfollowId = unfollowDto.getToUnfollowUserId();
 
-        User userFollower = this.userRepository.findById(followerId)
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        User userFollower = loggedUser.getLoggedUser();
+
         User userToUnfollow = this.userRepository.findById(userToUnfollowId)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
 
@@ -164,13 +163,18 @@ public class UserService implements IUserService {
 
     @Override
     public ResponseEntity deleteUser(Long id) {
-        //checkAuth.checkIfUserEqualsIdGiven(id);
         Optional<User> user = this.userRepository.findById(id);
         if (user.isEmpty())
             return new ResponseEntity<>(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
-
         //clearUserCache();
         this.userRepository.deleteById(id);
+        return new ResponseEntity<>("User with ID " + id +" deleted", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity deleteUser() {
+       this.userRepository.delete(loggedUser.getLoggedUser());
+        //clearUserCache();
         return new ResponseEntity<>("User deleted", HttpStatus.OK);
     }
 

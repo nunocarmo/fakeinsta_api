@@ -17,12 +17,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
- private UserAuthDetailsService userAuthDetailsService;
- private IUserRepository userRepository;
+    private UserAuthDetailsService userAuthDetailsService;
+    private IUserRepository userRepository;
 
-    public SecurityConfiguration(UserAuthDetailsService userAuthDetailsService, IUserRepository userRepository) {
+    private final PasswordEncoder encoder;
+
+    public SecurityConfiguration(UserAuthDetailsService userAuthDetailsService, IUserRepository userRepository, PasswordEncoder encoder) {
         this.userAuthDetailsService = userAuthDetailsService;
         this.userRepository = userRepository;
+        this.encoder = encoder;
     }
 
     @Override
@@ -41,12 +44,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository))
                 .authorizeRequests()
                 //configure access rules
-                .antMatchers("/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                 .anyRequest().authenticated()
-               /* .antMatchers(HttpMethod.POST, "/api/v1/staff/students").permitAll()
-                .antMatchers("/api/v1/students/**").hasAnyRole("STUDENT", "STAFF")
-                .antMatchers("/api/v1/teachers/**").hasAnyRole("TEACHER", "STAFF")
-                .antMatchers("/api/v1/staff/**").hasRole("STAFF")*/
+                /* .antMatchers(HttpMethod.POST, "/api/v1/staff/students").permitAll()
+                 .antMatchers("/api/v1/students/**").hasAnyRole("STUDENT", "STAFF")
+                 .antMatchers("/api/v1/teachers/**").hasAnyRole("TEACHER", "STAFF")
+                 .antMatchers("/api/v1/staff/**").hasRole("STAFF")*/
                 .and()
                 .httpBasic();
     }
@@ -55,14 +59,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(encoder);
         daoAuthenticationProvider.setUserDetailsService(this.userAuthDetailsService);
 
         return daoAuthenticationProvider;
     }
 
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

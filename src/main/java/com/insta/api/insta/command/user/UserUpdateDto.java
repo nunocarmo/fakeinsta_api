@@ -25,7 +25,6 @@ public class UserUpdateDto {
     private String username;
 
     @Size(min = 8, max = 35)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Email

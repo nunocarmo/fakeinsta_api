@@ -1,6 +1,7 @@
 package com.insta.api.insta.command.follower;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -12,7 +13,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class FollowDto {
-    @NotNull(message = "Follower id can't be empty")
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long followerUserId;
 
     @NotNull(message = "Id of user to follow can't be empty")

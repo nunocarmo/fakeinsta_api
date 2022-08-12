@@ -13,9 +13,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class UnfollowDto {
-   // @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-   // private Long id = null;
-    @NotNull(message = "Follower id can't be empty")
+
+   @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long followerUserId;
 
     @NotNull(message = "Id of user to unfollow can't be empty")

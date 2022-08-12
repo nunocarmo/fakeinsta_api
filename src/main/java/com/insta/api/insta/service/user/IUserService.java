@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface IUserService {
-    UserDto getUserById(Long userId);
+    UserDto getUserById();
 
     UserDto registerUser(UserDto userDto);
 
     List<UserDto> getAllUsers();
 
-    UserDto updateUser(Long id, UserUpdateDto userUpdateDto);
+    UserDto updateUser(UserUpdateDto userUpdateDto);
 
     List <UserDto> searchUsers(String username, String email, String name);
 
@@ -26,4 +26,6 @@ public interface IUserService {
     ResponseEntity unfollowUser(UnfollowDto unfollowDto);
 
     ResponseEntity deleteUser(Long id);
+
+    ResponseEntity deleteUser();
 }
