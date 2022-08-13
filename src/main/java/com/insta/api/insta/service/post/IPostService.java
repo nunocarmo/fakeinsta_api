@@ -19,4 +19,6 @@ public interface IPostService {
     PostDto getPostById(Long id);
 
     List<PostDto> searchPostsByUserName(String name);
+
+    ResponseEntity<Object> deleteById(Long id);
 }

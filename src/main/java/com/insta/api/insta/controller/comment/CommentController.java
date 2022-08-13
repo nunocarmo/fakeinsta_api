@@ -27,4 +27,9 @@ public class CommentController {
     public ResponseEntity<Object> deleteComment(@Valid @RequestBody DeleteCommentDto deleteCommentDto) {
         return this.commentService.delete(deleteCommentDto);
     }
+
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<Object> deleteCommentById(@PathVariable("id") Long id) {
+        return this.commentService.deleteById(id);
+    }
 }

@@ -37,7 +37,14 @@ public class CommentService implements ICommentService{
         if(!comment.getUserId().getId().equals(user.getLoggedUser().getId())){
             throw new NotFoundException(COMMENT_NOT_FROM_USER);
         }
-        CommentDto commentDto = this.commentConverter.converter(comment,CommentDto.class);
+        this.commentRepository.delete(comment);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Object> deleteById(Long id) {
+        Comment comment = this.commentRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException(COMMENT_NOT_FOUND));;
         this.commentRepository.delete(comment);
         return new ResponseEntity<>(HttpStatus.OK);
     }

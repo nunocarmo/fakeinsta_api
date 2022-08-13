@@ -1,6 +1,8 @@
 package com.insta.api.insta.persistence.model.user;
 
 import com.insta.api.insta.persistence.model.comment.Comment;
+import com.insta.api.insta.persistence.model.like.CommentUserLike;
+import com.insta.api.insta.persistence.model.like.PostUserLike;
 import com.insta.api.insta.persistence.model.post.Post;
 import com.insta.api.insta.persistence.model.follower.Follower;
 import com.insta.api.insta.persistence.model.role.Role;
@@ -40,7 +42,7 @@ public class User {
     @Column(nullable = true, unique = false, updatable = true)
     private String description;
 
-    @Column(nullable = true, unique = false, updatable = true, length = 64)
+    @Column(nullable = true, unique = false, updatable = true, length = 200)
     private String profilePhoto;
 
     @OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
@@ -59,5 +61,10 @@ public class User {
     @JoinColumn(name = "role_users")
     private Role roleId;
 
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
+    private List<PostUserLike> postUserLikeList;
+
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
+    private List<CommentUserLike> commentUserLikeList;
 
 }

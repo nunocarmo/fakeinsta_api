@@ -118,7 +118,7 @@ public class Dataloader implements ApplicationRunner {
     private List<Comment> getComments(List<User> users, List<Post> posts) {
         return List.of(
                 Comment.builder()
-                        .description("This is a comment num 1")
+                        .description("WOW")
                         .userId(users.get(1))
                         .postId(posts.get(0))
                         .creationDate("1-1-2022")
