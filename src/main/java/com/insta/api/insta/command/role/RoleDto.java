@@ -19,5 +19,5 @@ public class RoleDto implements Serializable {
 
     @NotEmpty
     @Size(min = 1, max = 20)
-    private String roleName;
+    private String name;
 }

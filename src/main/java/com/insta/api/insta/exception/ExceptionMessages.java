@@ -13,7 +13,7 @@ public class ExceptionMessages {
 
     public static final String HAVE_NOT_FOLLOWED = "You have not followed this user";
 
-
+    public static final String ROLE_NOT_FOUND = "Role Not Found";
     public static final String POST_NOT_FOUND = "Post Not Found";
     public static final String POST_NOT_FROM_USER = "This Post Is Not From This User";
     public static final String TAG_NOT_FOUND = "Tag Not Found";

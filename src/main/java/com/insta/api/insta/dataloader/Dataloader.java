@@ -3,11 +3,13 @@ package com.insta.api.insta.dataloader;
 import com.insta.api.insta.persistence.model.comment.Comment;
 import com.insta.api.insta.persistence.model.follower.Follower;
 import com.insta.api.insta.persistence.model.post.Post;
+import com.insta.api.insta.persistence.model.role.Role;
 import com.insta.api.insta.persistence.model.tag.Tag;
 import com.insta.api.insta.persistence.model.user.User;
 import com.insta.api.insta.persistence.repository.comment.ICommentRepository;
 import com.insta.api.insta.persistence.repository.follower.IFollowerRepository;
 import com.insta.api.insta.persistence.repository.post.IPostRepository;
+import com.insta.api.insta.persistence.repository.role.IRoleRepository;
 import com.insta.api.insta.persistence.repository.tag.ITagRepository;
 import com.insta.api.insta.persistence.repository.user.IUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +19,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -32,22 +32,28 @@ public class Dataloader implements ApplicationRunner {
     private final ITagRepository tagRepository;
     private final IFollowerRepository followerRepository;
     private final PasswordEncoder encoder;
+    private final IRoleRepository roleRepository;
 
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        List<User> users = getUsers();
+
+        List<Role> roles = getRoles();
+        List<Role> rolesFromDB = new ArrayList<>();
+        addRolesToDB(roles, rolesFromDB);
+
+        List<User> users = getUsers(rolesFromDB);
+        List<User> usersFromDb = new ArrayList<>();
+        addUsersToDB(users, usersFromDb);
+
         List<Tag> tags = getTags();
         List<Tag> tagsFromDb = new ArrayList<>();
-        List<User> usersFromDb = new ArrayList<>();
-        addTagsToDB(tags,tagsFromDb);
-        addUsersToDB(users,usersFromDb);
+        addTagsToDB(tags, tagsFromDb);
 
 
         List<Post> postsFromDb = new ArrayList<>();
         List<Post> posts = getPosts(usersFromDb, tagsFromDb);
-        addPostsToDB(posts,postsFromDb);
-
+        addPostsToDB(posts, postsFromDb);
 
 
         List<Comment> comments = getComments(usersFromDb, postsFromDb);
@@ -58,8 +64,8 @@ public class Dataloader implements ApplicationRunner {
                 .followerUser(usersFromDb.get(0))
                 .followed(usersFromDb.get(1))
                 .build();
-        if(this.followerRepository
-                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(),follower.getFollowed().getId()).isEmpty()) {
+        if (this.followerRepository
+                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
             this.followerRepository.save(follower);
         }
 
@@ -73,7 +79,7 @@ public class Dataloader implements ApplicationRunner {
         });
     }
 
-    private void addPostsToDB(List<Post> posts,List<Post> postsFromDb) {
+    private void addPostsToDB(List<Post> posts, List<Post> postsFromDb) {
         for (int i = 0; i < posts.size(); i++) {
             if (!this.postRepository.exists(Example.of(posts.get(i)))) {
                 this.postRepository.save(posts.get(i));
@@ -82,19 +88,16 @@ public class Dataloader implements ApplicationRunner {
         }
     }
 
-    private void addUsersToDB(List<User> users,List<User> usersFromDb) {
+    private void addUsersToDB(List<User> users, List<User> usersFromDb) {
         for (int i = 0; i < users.size(); i++) {
             if (this.userRepository.findByEmail(users.get(i).getEmail()).isEmpty()) {
                 this.userRepository.save(users.get(i));
             }
             usersFromDb.add(i, this.userRepository.findById(((i + 1L))).get());
         }
-        users.forEach(user -> {
-
-        });
     }
 
-    private void addTagsToDB(List<Tag> tags,List<Tag>tagsFromDb) {
+    private void addTagsToDB(List<Tag> tags, List<Tag> tagsFromDb) {
         for (int i = 0; i < tags.size(); i++) {
             if (this.tagRepository.findByTag(tags.get(i).getTag()).isEmpty()) {
                 this.tagRepository.save(tags.get(i));
@@ -102,6 +105,16 @@ public class Dataloader implements ApplicationRunner {
             tagsFromDb.add(this.tagRepository.findById(((i + 1L))).get());
         }
 
+    }
+
+    private void addRolesToDB(List<Role> roles, List<Role> rolesFromDB) {
+
+            for (int i = 0; i < roles.size(); i++) {
+                if (!this.roleRepository.exists(Example.of(roles.get(i)))) {
+                    this.roleRepository.save(roles.get(i));
+                }
+                rolesFromDB.add(roles.get(i));
+        }
     }
 
     private List<Comment> getComments(List<User> users, List<Post> posts) {
@@ -183,7 +196,7 @@ public class Dataloader implements ApplicationRunner {
         );
     }
 
-    private List<User> getUsers() {
+    private List<User> getUsers(List<Role> rolesFromDB) {
         return List.of(
                 User.builder()
                         .name("Ala Kropa")
@@ -191,7 +204,8 @@ public class Dataloader implements ApplicationRunner {
                         .password(encoder.encode("password"))
                         .email("alakropa@mail.com")
                         .profilePhoto("a photo")
-                        .description("alakropa@mail.com")
+                        .description("Aloha! \uD83D\uDEB2")
+                        .roleId(rolesFromDB.get(0))
                         .build()
                 ,
                 User.builder()
@@ -201,6 +215,39 @@ public class Dataloader implements ApplicationRunner {
                         .email("nuno@mail.com")
                         .profilePhoto("a photo")
                         .description("yesyes")
+                        .roleId(rolesFromDB.get(0))
+                        .build()
+                ,
+                User.builder()
+                        .name("Carolina Ferraz")
+                        .username("carol")
+                        .password(encoder.encode("password"))
+                        .email("carol@mail.com")
+                        .profilePhoto("a photo")
+                        .description("Trust me, I'm a Frontend")
+                        .roleId(rolesFromDB.get(0))
+                        .build()
+                ,
+                User.builder()
+                        .name("Mindswappers from Aveiro")
+                        .username("mindeirinhos")
+                        .password(encoder.encode("password"))
+                        .email("mail@mail.com")
+                        .profilePhoto("a photo")
+                        .description("Lads, it's friday already")
+                        .roleId(rolesFromDB.get(1))
                         .build());
+    }
+
+    private List<Role> getRoles() {
+        return List.of(
+                Role.builder()
+                        .name("admin")
+                        .build()
+                ,
+                Role.builder()
+                        .name("user")
+                        .build());
+
     }
 }

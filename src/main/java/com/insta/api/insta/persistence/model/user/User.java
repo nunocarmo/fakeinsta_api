@@ -1,8 +1,6 @@
 package com.insta.api.insta.persistence.model.user;
 
 import com.insta.api.insta.persistence.model.comment.Comment;
-import com.insta.api.insta.persistence.model.like.CommentUserLike;
-import com.insta.api.insta.persistence.model.like.PostUserLike;
 import com.insta.api.insta.persistence.model.post.Post;
 import com.insta.api.insta.persistence.model.follower.Follower;
 import com.insta.api.insta.persistence.model.role.Role;
@@ -26,9 +24,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true, updatable = false)
     private Long id;
-
-  //  @Column(nullable = false, unique = false, updatable = false)
-   // private Role role;
 
     @Column(nullable = false, unique = false, updatable = true)
     private String name;
@@ -59,5 +54,10 @@ public class User {
 
     @OneToMany(mappedBy = "followed")
     private List<Follower> follows = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "role_users")
+    private Role roleId;
+
 
 }

@@ -7,7 +7,9 @@ import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.converter.user.IUserConverter;
 import com.insta.api.insta.exception.*;
 import com.insta.api.insta.persistence.model.follower.Follower;
+import com.insta.api.insta.persistence.model.role.Role;
 import com.insta.api.insta.persistence.model.user.User;
+import com.insta.api.insta.persistence.repository.role.IRoleRepository;
 import com.insta.api.insta.persistence.repository.follower.IFollowerRepository;
 import com.insta.api.insta.persistence.repository.user.IUserRepository;
 import com.insta.api.insta.security.LoggedUser;
@@ -30,6 +32,8 @@ public class UserService implements IUserService {
     private IUserConverter userConverter;
 
     private IFollowerRepository followerRepository;
+
+    private IRoleRepository roleRepository;
     private final LoggedUser loggedUser;
     private final PasswordEncoder encoder;
     @Override
@@ -52,8 +56,13 @@ public class UserService implements IUserService {
                 });
 
         User user = this.userConverter.converter(userDto, User.class);
+        Role userRole = this.roleRepository.findByName("user")
+                        .orElseThrow(() -> new BadRequestException(ROLE_NOT_FOUND));
+        user.setRoleId(userRole);
+        userRole.getUsers().add(user);
         user.setPassword(encoder.encode(user.getPassword()));
         this.userRepository.save(user);
+        this.roleRepository.save(userRole);
         return this.userConverter.converter(user, UserDto.class);
     }
 
