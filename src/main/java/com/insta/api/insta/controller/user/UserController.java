@@ -6,6 +6,9 @@ import com.insta.api.insta.command.user.UserDto;
 import com.insta.api.insta.command.user.UserUpdateDto;
 import com.insta.api.insta.service.user.IUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +23,7 @@ public class UserController {
     private IUserService userService;
 
     @GetMapping()
+    @Cacheable(value = "users")
     public UserDto getUserById() {
         return this.userService.getUserById();
     }
@@ -31,6 +35,8 @@ public class UserController {
         return this.userService.searchUsers(username, email, name);
     }
     @GetMapping("/admin")
+    @Cacheable(value = "users")
+    @CachePut(value="users")
     public List<UserDto> getAllUsers() {
         return this.userService.getAllUsers();
     }
