@@ -20,6 +20,7 @@ public class Role {
     @Column(nullable = false, unique = true, updatable = false)
     private Long id;
 
+    @Column(nullable = false, unique = true, updatable = false)
     private String name;
 
     @OneToMany(mappedBy = "roleId")
