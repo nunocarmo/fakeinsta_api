@@ -22,12 +22,12 @@ public class UserAuth implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-    List<GrantedAuthority> authorities = new ArrayList<>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
         //Extract list of roles
-/*        String role = "ROLE_" + this.user.getRoleId().getName();
+        String role = "ROLE_" + this.user.getRoleId().getName();
         GrantedAuthority authority = new SimpleGrantedAuthority(role);
-        authorities.add(authority);*/
+        authorities.add(authority);
 
         return authorities;
     }

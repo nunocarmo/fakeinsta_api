@@ -79,4 +79,12 @@ public class PostService implements IPostService {
         List<Post> posts = this.postRepository.searchPostsByUserName(name);
         return this.postConverter.converterList(posts, PostDto.class);
     }
+
+    @Override
+    public ResponseEntity<Object> deleteById(Long id) {
+        Post post = this.postRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(POST_NOT_FOUND));
+        this.postRepository.delete(post);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

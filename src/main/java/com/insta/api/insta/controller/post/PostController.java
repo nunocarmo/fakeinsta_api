@@ -32,6 +32,12 @@ public class PostController {
     public ResponseEntity<Object> deletePost(@Valid @RequestBody DeletePostDto deletePostDto) {
         return this.postService.delete(deletePostDto);
     }
+
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<Object> deletePostById(@PathVariable("id") Long id) {
+        return this.postService.deleteById(id);
+    }
+
     @GetMapping("/search/tag")
     public List<PostDto> getPostsByTag(@RequestParam(value = "tag") String tag) {
         return this.postService.searchByTag(tag);

@@ -9,4 +9,6 @@ public interface ICommentService {
     CommentDto add(AddCommentDto addCommentDto);
 
     ResponseEntity<Object> delete(DeleteCommentDto deleteCommentDto);
+
+    ResponseEntity<Object> deleteById(Long id);
 }
