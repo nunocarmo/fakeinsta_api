@@ -50,11 +50,9 @@ public class Dataloader implements ApplicationRunner {
         List<Tag> tagsFromDb = new ArrayList<>();
         addTagsToDB(tags, tagsFromDb);
 
-
         List<Post> postsFromDb = new ArrayList<>();
         List<Post> posts = getPosts(usersFromDb, tagsFromDb);
         addPostsToDB(posts, postsFromDb);
-
 
         List<Comment> comments = getComments(usersFromDb, postsFromDb);
         addCommentsToDB(comments);
