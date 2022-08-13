@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class FollowDto {
-
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long followerUserId;
 
