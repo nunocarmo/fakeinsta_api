@@ -171,6 +171,28 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("1-1-2022")
                         .tagList(List.of(tags.get(0)))
                         .userId(users.get(1))
+                        .build(),
+
+                Post.builder()
+                        .description("Mini golf rocks!")
+                        .photo("https://www.flickr.com/photos/196281383@N04/shares/24eKm9GbHw")
+                        .creationDate("14-08-2022")
+                        .tagList(List.of(tags.get(6), tags.get(5), tags.get(4), tags.get(3)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Abbey Road of Ílhavo")
+                        .photo("https://www.flickr.com/photos/196281383@N04/shares/4f41f7sP7Z")
+                        .creationDate("14-08-2022")
+                        .tagList(List.of(tags.get(3)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Serious stuff going on here")
+                        .photo("https://www.flickr.com/photos/196281383@N04/shares/26Lc9x5jnZ")
+                        .creationDate("14-08-2022")
+                        .tagList(List.of(tags.get(7)))
+                        .userId(users.get(3))
                         .build()
         );
     }
@@ -191,6 +213,22 @@ public class Dataloader implements ApplicationRunner {
                         .build(),
                 Tag.builder()
                         .tag("#MindSwap")
+                        .postList(null)
+                        .build(),
+                Tag.builder()
+                        .tag("#afterhours")
+                        .postList(null)
+                        .build(),
+                Tag.builder()
+                        .tag("#soUmaCerveja")
+                        .postList(null)
+                        .build(),
+                Tag.builder()
+                        .tag("#minigolf")
+                        .postList(null)
+                        .build(),
+                Tag.builder()
+                        .tag("#bringSomeKebabs")
                         .postList(null)
                         .build()
         );
