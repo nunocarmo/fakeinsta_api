@@ -21,4 +21,6 @@ public interface IPostService {
     List<PostDto> searchPostsByUserName(String name);
 
     ResponseEntity<Object> deleteById(Long id);
+
+    List<PostDto> getPostsFromFollowing();
 }

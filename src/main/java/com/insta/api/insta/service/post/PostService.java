@@ -5,8 +5,10 @@ import com.insta.api.insta.command.post.DeletePostDto;
 import com.insta.api.insta.command.post.PostDto;
 import com.insta.api.insta.converter.post.IPostConverter;
 import com.insta.api.insta.exception.NotFoundException;
+import com.insta.api.insta.persistence.model.follower.Follower;
 import com.insta.api.insta.persistence.model.post.Post;
 import com.insta.api.insta.persistence.model.tag.Tag;
+import com.insta.api.insta.persistence.repository.follower.IFollowerRepository;
 import com.insta.api.insta.persistence.repository.post.IPostRepository;
 import com.insta.api.insta.persistence.repository.tag.ITagRepository;
 import com.insta.api.insta.security.LoggedUser;
@@ -27,6 +29,7 @@ public class PostService implements IPostService {
     private final IPostRepository postRepository;
     private final ITagRepository tagRepository;
     private final IPostConverter postConverter;
+    private final IFollowerRepository followerRepository;
     private final LoggedUser user;
 
     @Override
@@ -86,5 +89,13 @@ public class PostService implements IPostService {
                 .orElseThrow(() -> new NotFoundException(POST_NOT_FOUND));
         this.postRepository.delete(post);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public List<PostDto> getPostsFromFollowing() {
+        List <Follower> follows = this.followerRepository.findFollowsByUserId(user.getLoggedUser().getId());
+        List<Long> ids = follows.stream().map(Follower::getId).toList();
+        List<Post> posts = this.postRepository.findByIdIn(ids);
+        return this.postConverter.converterList(posts,PostDto.class);
     }
 }
