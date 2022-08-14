@@ -31,6 +31,6 @@ public class UserUpdateDto {
     @Size(max = 200)
     private String description;
 
-
+    @Size(max = 600)
     private String profilePhoto;
 }
