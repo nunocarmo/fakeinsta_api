@@ -27,8 +27,10 @@ public class UserUpdateDto {
     @Size(max = 40)
     private String email;
 
+
     @Size(max = 200)
     private String description;
+
 
     private String profilePhoto;
 }
