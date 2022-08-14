@@ -16,6 +16,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("api/v1/comment")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class CommentController {
 
     private final ICommentService commentService;

@@ -38,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable() //Permite usar outros métodos para além do GET (csrf útil em form based authentication, em jwt não é útil)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //State não é útil em jwt, mas sim em form based
+                .and().cors()
                 .and()
                 //add jwt filters (1st. authentication, 2nd. authorization)
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
