@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.insta.api.insta.command.comment.CommentIdDto;
 import com.insta.api.insta.command.post.PostIdDto;
 import com.insta.api.insta.command.post.PostLessInfDto;
+import com.insta.api.insta.persistence.model.follower.Follower;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -40,15 +41,18 @@ public class UserDto {
     @Size(max = 40)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Size(max = 200)
-    private String description;
+    private String description = "Hello! Is it me you're looking for?";
 
-    private String profilePhoto;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String profilePhoto = "https://freesvg.org/img/red_avatar.png";
+
     private List<CommentIdDto> commentUserLikeList;
     private List<PostIdDto> postUserLikeList;
     private List<PostLessInfDto> postList;
 
-    // private List<Follower> followers;
+    private List<Follower> followers;
 
-    // private List<Follower> following;
+    private List<Follower> following;
 }

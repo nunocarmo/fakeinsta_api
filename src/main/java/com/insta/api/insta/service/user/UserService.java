@@ -132,7 +132,7 @@ public class UserService implements IUserService {
        }
         Follower follower = new Follower();
         follower.setFollowerUser(userFollower);
-        userFollower.getFollows().add(follower);
+        userFollower.getFollowing().add(follower);
 
         follower.setFollowed(userToFollow);
         userToFollow.getFollowers().add(follower);
@@ -160,7 +160,7 @@ public class UserService implements IUserService {
         Follower follower = this.followerRepository.findFollowerAndFollowedMatch(followerId, userToUnfollowId)
                 .orElseThrow(() -> new ConflictException(HAVE_NOT_FOLLOWED));
 
-        userFollower.getFollows().remove(follower);
+        userFollower.getFollowing().remove(follower);
         userToUnfollow.getFollowers().remove(follower);
 
         this.followerRepository.delete(follower);
