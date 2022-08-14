@@ -10,11 +10,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: ${HIBERNATE_DDL_AUTO:create-drop}
+      ddl-auto: ${HIBERNATE_DDL_AUTO:update}
       show-sql: true
   datasource:
     platform: postgres
-    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/insta_db}
-    username: ${POSTGRES_USERNAME:postgres}
-    password: ${POSTGRES_PASSWORD:password}
+    url: ${POSTGRES_URL:jdbc:postgresql://ec2-52-49-120-150.eu-west-1.compute.amazonaws.com:5432/d409ucrvidf06t}
+    username: ${POSTGRES_USERNAME:scxqtmotsknxdn}
+    password: ${POSTGRES_PASSWORD:ecc742bfcb88ca6048e7f9baa8c12be9caaabe7362a8e049252742c4c65002eb}
     driverClassName: org.postgresql.Driver

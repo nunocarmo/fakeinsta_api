@@ -33,6 +33,9 @@ public class Post {
     @JoinColumn(name = "user_id_fk")
     private User userId;
 
+   // private String userName;
+
+
     @OneToMany(mappedBy = "postId", cascade = CascadeType.REMOVE)
     private List<PostUserLike> postUserLikeList;
 
