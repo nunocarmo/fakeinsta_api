@@ -23,8 +23,9 @@ public class UserController {
     private IUserService userService;
 
     @GetMapping()
-    @Cacheable(value = "users")
+    @Cacheable(value = "user")
     public UserDto getUserById() {
+        System.out.println("Getting a user from the DB");
         return this.userService.getUserById();
     }
 
@@ -36,8 +37,8 @@ public class UserController {
     }
     @GetMapping("/admin")
     @Cacheable(value = "users")
-    @CachePut(value="users")
     public List<UserDto> getAllUsers() {
+        System.out.println("Getting users from the DB");
         return this.userService.getAllUsers();
     }
 
@@ -47,16 +48,19 @@ public class UserController {
     }
 
     @PatchMapping()
+    @CachePut(value="users")
     public UserDto updateUser(@Valid @RequestBody UserUpdateDto userUpdateDto) {
         return this.userService.updateUser(userUpdateDto);
     }
 
     @PatchMapping("/follow")
+    @CachePut(value="users")
     public ResponseEntity followUser(@RequestBody FollowDto followDto) {
         return this.userService.followUser(followDto);
     }
 
     @PatchMapping("/unfollow")
+    @CachePut(value="users")
     public ResponseEntity unfollowUser(@RequestBody UnfollowDto unfollowDto) {
         return this.userService.unfollowUser(unfollowDto);
     }
