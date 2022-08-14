@@ -51,11 +51,11 @@ public class User {
     @OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE)
     private List<Post> postList;
 
-    @OneToMany(mappedBy = "followerUser")
+    @OneToMany(mappedBy = "followed")
     private List<Follower> followers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "followed")
-    private List<Follower> follows = new ArrayList<>();
+    @OneToMany(mappedBy ="followerUser" )
+    private List<Follower> following = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "role_users")
