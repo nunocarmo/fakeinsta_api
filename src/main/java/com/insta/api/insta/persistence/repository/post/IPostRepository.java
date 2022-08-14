@@ -24,6 +24,10 @@ public interface IPostRepository extends JpaRepository<Post,Long> {
             "ON users.id = post.user_id_fk\n" +
             "WHERE LOWER(users.name)  LIKE LOWER(CONCAT('%',:name,'%'))", nativeQuery = true)
     List<Post> searchPostsByUserName(String name);
-
-    List<Post> findByIdIn(List<Long> ids);
+    @Query(value = "SELECT post.* FROM post\n" +
+            "INNER JOIN\n" +
+            "users\n" +
+            "ON users.id = post.user_id_fk\n" +
+            "WHERE users.id = :ids ", nativeQuery = true)
+    List<Post> findByUserIdIn(List<Long> ids);
 }
