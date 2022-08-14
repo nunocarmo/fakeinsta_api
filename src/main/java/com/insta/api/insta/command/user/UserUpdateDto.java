@@ -29,8 +29,8 @@ public class UserUpdateDto {
 
 
     @Size(max = 200)
-    private String description = "Hello! Is it me you're looking for?";
+    private String description;
 
 
-    private String profilePhoto = "profile photo";
+    private String profilePhoto;
 }
