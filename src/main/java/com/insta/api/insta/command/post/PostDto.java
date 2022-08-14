@@ -19,6 +19,7 @@ public class PostDto {
     private String description;
     private String creationDate;
     private Long userId;
+    private String userName;
     private List<AddTagDto> tagList;
     private List<UserLikeDto> postUserLikeList;
     private List<CommentDto> commentList;

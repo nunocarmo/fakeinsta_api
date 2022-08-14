@@ -11,6 +11,7 @@ import lombok.*;
 public class PostLessInfDto {
     private Long id;
     private String photo;
+    private String userName;
     private String description;
     private String creationDate;
 }

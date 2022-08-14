@@ -41,7 +41,7 @@ public class PostService implements IPostService {
     public PostDto add(AddPostDto addPostDto) {
         addPostDto.setUserId(user.getLoggedUser().getId());
         Post newPost = this.postConverter.converter(addPostDto, Post.class);
-
+        newPost.setUserName(user.getLoggedUser().getUsername());
         if (newPost.getTagList() != null) {
             for (int i = 0; i < newPost.getTagList().size(); i++) {
                 newPost.getTagList().set(i, this.tagRepository.findByTag(newPost.getTagList().get(i).getTag())
@@ -94,9 +94,9 @@ public class PostService implements IPostService {
 
     @Override
     public List<PostDto> getPostsFromFollowing() {
-        List <Follower> follows = this.followerRepository.findFollowsByUserId(user.getLoggedUser().getId());
+        List<Follower> follows = this.followerRepository.findFollowsByUserId(user.getLoggedUser().getId());
         List<Long> ids = follows.stream().map(Follower::getId).toList();
         List<Post> posts = this.postRepository.findByIdIn(ids);
-        return this.postConverter.converterList(posts,PostDto.class);
+        return this.postConverter.converterList(posts, PostDto.class);
     }
 }
