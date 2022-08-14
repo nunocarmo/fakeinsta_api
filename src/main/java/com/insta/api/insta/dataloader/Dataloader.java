@@ -239,7 +239,7 @@ public class Dataloader implements ApplicationRunner {
                         .username("alakropa")
                         .password(encoder.encode("password"))
                         .email("alakropa@mail.com")
-                        .profilePhoto("")
+                        .profilePhoto("https://i.imgur.com/4YRZhJO.jpg")
                         .description("Aloha! \uD83D\uDEB2")
                         .roleId(rolesFromDB.get(0))
                         .build()
