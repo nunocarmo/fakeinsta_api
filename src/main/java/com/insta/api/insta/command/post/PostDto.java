@@ -1,7 +1,7 @@
 package com.insta.api.insta.command.post;
 
 import com.insta.api.insta.command.comment.CommentDto;
-import com.insta.api.insta.command.like.UserLikeDto;
+import com.insta.api.insta.command.like.post.PostUserLikeDto;
 import com.insta.api.insta.command.tag.AddTagDto;
 import lombok.*;
 
@@ -21,6 +21,6 @@ public class PostDto {
     private Long userId;
     private String userName;
     private List<AddTagDto> tagList;
-    private List<UserLikeDto> postUserLikeList;
+    private List<PostUserLikeDto> postUserLikeList;
     private List<CommentDto> commentList;
 }
