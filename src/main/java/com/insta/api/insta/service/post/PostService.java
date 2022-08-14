@@ -41,7 +41,6 @@ public class PostService implements IPostService {
     public PostDto add(AddPostDto addPostDto) {
         addPostDto.setUserId(user.getLoggedUser().getId());
         Post newPost = this.postConverter.converter(addPostDto, Post.class);
-        newPost.setUserName(user.getLoggedUser().getUsername());
         if (newPost.getTagList() != null) {
             for (int i = 0; i < newPost.getTagList().size(); i++) {
                 newPost.getTagList().set(i, this.tagRepository.findByTag(newPost.getTagList().get(i).getTag())
