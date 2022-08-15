@@ -15,13 +15,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/user")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     private IUserService userService;
 
     @GetMapping()
-    public UserDto getUserById() {
-        return this.userService.getUserById();
+    public UserDto getLoggedUser() {
+        return this.userService.getLoggedUser();
+    }
+
+    @GetMapping()
+    public UserDto getUserById(Long id) {
+        return this.userService.getUserById(id);
     }
 
     @GetMapping("/search")

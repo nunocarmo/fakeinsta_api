@@ -57,10 +57,36 @@ public class Dataloader implements ApplicationRunner {
         List<Comment> comments = getComments(usersFromDb, postsFromDb);
         addCommentsToDB(comments);
 
+        //List<Follower> followersFromDB = new ArrayList<>();
+        // List<Follower> followers = getFollowers(usersFromDb);
+        //  addFollowersToDB(followers, followersFromDB);
+
         Follower follower = Follower
                 .builder()
                 .followerUser(usersFromDb.get(0))
                 .followed(usersFromDb.get(1))
+                .build();
+        if (this.followerRepository
+                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower);
+        }
+
+
+        Follower follower2 = Follower
+                .builder()
+                .followerUser(usersFromDb.get(0))
+                .followed(usersFromDb.get(3))
+                .build();
+        if (this.followerRepository
+                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower);
+        }
+
+
+        Follower follower3 = Follower
+                .builder()
+                .followerUser(usersFromDb.get(0))
+                .followed(usersFromDb.get(3))
                 .build();
         if (this.followerRepository
                 .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
@@ -107,11 +133,11 @@ public class Dataloader implements ApplicationRunner {
 
     private void addRolesToDB(List<Role> roles, List<Role> rolesFromDB) {
 
-            for (int i = 0; i < roles.size(); i++) {
-                if (!this.roleRepository.exists(Example.of(roles.get(i)))) {
-                    this.roleRepository.save(roles.get(i));
-                }
-                rolesFromDB.add(roles.get(i));
+        for (int i = 0; i < roles.size(); i++) {
+            if (!this.roleRepository.exists(Example.of(roles.get(i)))) {
+                this.roleRepository.save(roles.get(i));
+            }
+            rolesFromDB.add(roles.get(i));
         }
     }
 
@@ -153,7 +179,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("1-1-2022")
                         .tagList(List.of(tags.get(1)))
                         .userId(users.get(1))
-                        .userName(users.get(1).getUsername())
                         .build(),
 
                 Post.builder()
@@ -162,7 +187,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("1-1-2022")
                         .tagList(List.of(tags.get(2), tags.get(0)))
                         .userId(users.get(0))
-                        .userName(users.get(0).getUsername())
                         .build(),
 
                 Post.builder()
@@ -171,7 +195,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("1-1-2022")
                         .tagList(List.of(tags.get(0)))
                         .userId(users.get(1))
-                        .userName(users.get(1).getUsername())
                         .build(),
 
                 Post.builder()
@@ -180,7 +203,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("14-08-2022")
                         .tagList(List.of(tags.get(3), tags.get(4), tags.get(5)))
                         .userId(users.get(3))
-                        .userName(users.get(3).getUsername())
                         .build(),
                 Post.builder()
                         .description("Abbey Road of Ílhavo")
@@ -188,7 +210,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("14-08-2022")
                         .tagList(List.of(tags.get(3)))
                         .userId(users.get(3))
-                        .userName(users.get(3).getUsername())
                         .build(),
                 Post.builder()
                         .description("Serious stuff going on here")
@@ -196,7 +217,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("14-08-2022")
                         .tagList(List.of(tags.get(7)))
                         .userId(users.get(3))
-                        .userName(users.get(3).getUsername())
                         .build()
         );
     }
@@ -276,6 +296,7 @@ public class Dataloader implements ApplicationRunner {
                         .password(encoder.encode("password"))
                         .email("mail@mail.com")
                         .profilePhoto("https://i.imgur.com/yfS5zkm.jpg")
+                        .description("It's friday already!")
                         .roleId(rolesFromDB.get(1))
                         .build());
     }
