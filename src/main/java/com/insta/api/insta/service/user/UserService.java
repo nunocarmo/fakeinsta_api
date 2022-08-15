@@ -37,7 +37,7 @@ public class UserService implements IUserService {
     private final LoggedUser loggedUser;
     private final PasswordEncoder encoder;
     @Override
-    public UserDto getUserById() {
+    public UserDto getLoggedUser() {
         User user = this.userRepository.findById(loggedUser.getLoggedUser().getId())
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
         return this.userConverter.converter(user, UserDto.class);
@@ -185,6 +185,13 @@ public class UserService implements IUserService {
        this.userRepository.delete(loggedUser.getLoggedUser());
         //clearUserCache();
         return new ResponseEntity<>("User deleted", HttpStatus.OK);
+    }
+
+    @Override
+    public UserDto getUserById(Long id) {
+        User user = this.userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND));
+        return this.userConverter.converter(user, UserDto.class);
     }
 
 

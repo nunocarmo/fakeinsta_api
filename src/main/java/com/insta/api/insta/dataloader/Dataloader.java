@@ -57,10 +57,36 @@ public class Dataloader implements ApplicationRunner {
         List<Comment> comments = getComments(usersFromDb, postsFromDb);
         addCommentsToDB(comments);
 
+        //List<Follower> followersFromDB = new ArrayList<>();
+        // List<Follower> followers = getFollowers(usersFromDb);
+        //  addFollowersToDB(followers, followersFromDB);
+
         Follower follower = Follower
                 .builder()
                 .followerUser(usersFromDb.get(0))
                 .followed(usersFromDb.get(1))
+                .build();
+        if (this.followerRepository
+                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower);
+        }
+
+
+        Follower follower2 = Follower
+                .builder()
+                .followerUser(usersFromDb.get(0))
+                .followed(usersFromDb.get(3))
+                .build();
+        if (this.followerRepository
+                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower);
+        }
+
+
+        Follower follower3 = Follower
+                .builder()
+                .followerUser(usersFromDb.get(0))
+                .followed(usersFromDb.get(3))
                 .build();
         if (this.followerRepository
                 .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
@@ -107,11 +133,11 @@ public class Dataloader implements ApplicationRunner {
 
     private void addRolesToDB(List<Role> roles, List<Role> rolesFromDB) {
 
-            for (int i = 0; i < roles.size(); i++) {
-                if (!this.roleRepository.exists(Example.of(roles.get(i)))) {
-                    this.roleRepository.save(roles.get(i));
-                }
-                rolesFromDB.add(roles.get(i));
+        for (int i = 0; i < roles.size(); i++) {
+            if (!this.roleRepository.exists(Example.of(roles.get(i)))) {
+                this.roleRepository.save(roles.get(i));
+            }
+            rolesFromDB.add(roles.get(i));
         }
     }
 
@@ -276,6 +302,7 @@ public class Dataloader implements ApplicationRunner {
                         .password(encoder.encode("password"))
                         .email("mail@mail.com")
                         .profilePhoto("https://i.imgur.com/yfS5zkm.jpg")
+                        .description("It's friday already!")
                         .roleId(rolesFromDB.get(1))
                         .build());
     }
