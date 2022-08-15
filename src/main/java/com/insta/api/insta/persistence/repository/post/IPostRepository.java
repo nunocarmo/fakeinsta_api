@@ -28,6 +28,6 @@ public interface IPostRepository extends JpaRepository<Post,Long> {
             "INNER JOIN\n" +
             "users\n" +
             "ON users.id = post.user_id_fk\n" +
-            "WHERE users.id = :ids ", nativeQuery = true)
-    List<Post> findByUserIdIn(List<Long> ids);
+            "WHERE users.id = :id ", nativeQuery = true)
+    List<Post> findByUserId(Long id);
 }
