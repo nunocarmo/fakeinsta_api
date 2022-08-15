@@ -78,8 +78,8 @@ public class Dataloader implements ApplicationRunner {
                 .followed(usersFromDb.get(2))
                 .build();
         if (this.followerRepository
-                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
-            this.followerRepository.save(follower);
+                .findFollowerAndFollowedMatch(follower2.getFollowerUser().getId(), follower2.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower2);
         }
 
 
@@ -89,8 +89,8 @@ public class Dataloader implements ApplicationRunner {
                 .followed(usersFromDb.get(3))
                 .build();
         if (this.followerRepository
-                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
-            this.followerRepository.save(follower);
+                .findFollowerAndFollowedMatch(follower3.getFollowerUser().getId(), follower3.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower3);
         }
 
         Follower follower4 = Follower
@@ -99,8 +99,8 @@ public class Dataloader implements ApplicationRunner {
                 .followed(usersFromDb.get(3))
                 .build();
         if (this.followerRepository
-                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
-            this.followerRepository.save(follower);
+                .findFollowerAndFollowedMatch(follower4.getFollowerUser().getId(), follower4.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower4);
         }
 
         Follower follower5 = Follower
@@ -109,8 +109,8 @@ public class Dataloader implements ApplicationRunner {
                 .followed(usersFromDb.get(3))
                 .build();
         if (this.followerRepository
-                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
-            this.followerRepository.save(follower);
+                .findFollowerAndFollowedMatch(follower5.getFollowerUser().getId(), follower5.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower5);
         }
 
         Follower follower6 = Follower
@@ -119,8 +119,8 @@ public class Dataloader implements ApplicationRunner {
                 .followed(usersFromDb.get(2))
                 .build();
         if (this.followerRepository
-                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
-            this.followerRepository.save(follower);
+                .findFollowerAndFollowedMatch(follower6.getFollowerUser().getId(), follower6.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower6);
         }
 
     }
