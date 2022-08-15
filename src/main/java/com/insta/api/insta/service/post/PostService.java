@@ -95,7 +95,6 @@ public class PostService implements IPostService {
     public List<PostDto> getPostsFromFollowing() {
         List<Follower> follows = this.followerRepository.findFollowsByUserId(user.getLoggedUser().getId());
         List<Long> ids = follows.stream().map(follow -> follow.getFollowed().getId()).toList();
-        ids.add(user.getLoggedUser().getId());
         List<Post> posts = this.postRepository.findByUserIdIn(ids);
         return this.postConverter.converterList(posts, PostDto.class);
     }
