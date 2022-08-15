@@ -8,18 +8,23 @@ import com.insta.api.insta.exception.NotFoundException;
 import com.insta.api.insta.persistence.model.follower.Follower;
 import com.insta.api.insta.persistence.model.post.Post;
 import com.insta.api.insta.persistence.model.tag.Tag;
+import com.insta.api.insta.persistence.model.user.User;
 import com.insta.api.insta.persistence.repository.follower.IFollowerRepository;
 import com.insta.api.insta.persistence.repository.post.IPostRepository;
 import com.insta.api.insta.persistence.repository.tag.ITagRepository;
+import com.insta.api.insta.persistence.repository.user.IUserRepository;
 import com.insta.api.insta.security.LoggedUser;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.util.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.insta.api.insta.exception.ExceptionMessages.*;
 
@@ -31,6 +36,7 @@ public class PostService implements IPostService {
     private final IPostConverter postConverter;
     private final IFollowerRepository followerRepository;
     private final LoggedUser user;
+    private final IUserRepository userRepository;
 
     @Override
     public List<PostDto> getAll() {
@@ -94,9 +100,14 @@ public class PostService implements IPostService {
     @Override
     public List<PostDto> getPostsFromFollowing() {
         List<Follower> follows = this.followerRepository.findFollowsByUserId(user.getLoggedUser().getId());
-        List<Long> ids = new ArrayList<>(follows.stream().map(follow -> follow.getFollowed().getId()).toList());
-        ids.add(user.getLoggedUser().getId());
-        List<Post> posts = this.postRepository.findByUserIdIn(ids);
-        return this.postConverter.converterList(posts, PostDto.class);
+        List<Long> ids = follows.stream().map(follow -> follow.getFollowed().getId()).collect(Collectors.toList());
+        User users = this.userRepository.findById(user.getLoggedUser().getId()).get();
+        List<Long> allIds = new ArrayList<>(ids);
+        allIds.add(users.getId());
+        List<Post> allPosts = new ArrayList<>();
+        for (Long id : allIds) {
+           allPosts.addAll(this.postRepository.findByUserId(id));
+        }
+        return this.postConverter.converterList(allPosts, PostDto.class);
     }
 }
