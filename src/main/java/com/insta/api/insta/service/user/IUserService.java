@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface IUserService {
-    UserDto getUserById();
+    UserDto getLoggedUser();
 
     UserDto registerUser(UserDto userDto);
 
@@ -28,4 +28,6 @@ public interface IUserService {
     ResponseEntity deleteUser(Long id);
 
     ResponseEntity deleteUser();
+
+    UserDto getUserById(Long id);
 }
