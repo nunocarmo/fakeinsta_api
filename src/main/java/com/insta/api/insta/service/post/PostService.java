@@ -15,13 +15,11 @@ import com.insta.api.insta.persistence.repository.tag.ITagRepository;
 import com.insta.api.insta.persistence.repository.user.IUserRepository;
 import com.insta.api.insta.security.LoggedUser;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.util.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

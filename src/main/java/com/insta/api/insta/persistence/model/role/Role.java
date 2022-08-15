@@ -2,7 +2,6 @@ package com.insta.api.insta.persistence.model.role;
 
 import com.insta.api.insta.persistence.model.user.User;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
