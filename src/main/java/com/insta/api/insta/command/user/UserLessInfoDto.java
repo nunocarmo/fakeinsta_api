@@ -11,4 +11,5 @@ import lombok.*;
 public class UserLessInfoDto {
     private Long id;
     private String name;
+    private String profilePhoto;
 }
