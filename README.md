@@ -14,7 +14,7 @@ https://fake-insta-mind-api.herokuapp.com/
 ***
 
 - Model Relationships
-- Spring Security
+- Spring Security and JWT
 - Swagger
 - Postman Collection
 - Docker Compose
@@ -41,7 +41,7 @@ https://fake-insta-mind-api.herokuapp.com/
 
 | Responses | Description                          |
 |-----------|--------------------------------------|
-| `200`     | Request executed succesfully.        |
+| `200`     | Request executed successfully.       |
 | `400`     | Validation errors.                   |
 | `403`     | Forbidden Access.                    |
 | `404`     | Searched record not found.           |
@@ -87,12 +87,19 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 
 ### USER ( api/v1/user )
 
-| Request  | Description     | Link              |
-|----------|-----------------|-------------------|
-| `GET`    | Get logged user | api/v1/user       |
-| `GET`    | Get logged user | api/v1/user/{id}  |
-| `DELETE` | Delete user     | api/v1/user/{id}  |
-| `DELETE` | Delete User     | api/v1/user/admin |
+| Request | Description                                | Link                                                           | Body / Query parameters                                                                                             |
+|---------|--------------------------------------------|----------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| `GET`   | Get logged user                            | api/v1/user                                                    |                                                                                                                     |
+| `GET`   | Get user by ID                             | api/v1/user/{id}                                               |                                                                                                                     |
+| `GET`   | Search user by Username/ name/ email       | api/v1/user/search | String username, String name, String email                                                                          |
+| `GET`   | Get all users (admin role authorized only) | api/v1/user/admin                                              |                                                                                                                     |
+| `PATCH` | Follow user                                | /api/v1/user/follow                                            | {"toFollowUserId": 1}                                                                                               |
+| `PATCH` | Unfollow user                              | /api/v1/user/unfollow                                          | {"toUnfollowUserId": 2}                                                                                             |
+| `PATCH` | Update user                                |  api/v1/user                                                                 | {"name" : "User", "username": "user1", "password": "password", "email": "mail@mail.com", "description": "Hey all!"} |
+| `DELETE` | Delete user                                |  api/v1/user                                                                            |                                                                                                                     |
+
+
+### POST ( api/v1/post )
 
 | Request  | Description    | Link              |
 |----------|----------------|-------------------|
