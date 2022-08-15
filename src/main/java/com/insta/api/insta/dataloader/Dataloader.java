@@ -311,13 +311,6 @@ public class Dataloader implements ApplicationRunner {
                         .userId(users.get(3))
                         .build(),
                 Post.builder()
-                        .description("Amigo")
-                        .photo("https://i.imgur.com/3EulFTU.jpg")
-                        .creationDate("15-08-2022")
-                        .tagList(List.of(tags.get(1), tags.get(3)))
-                        .userId(users.get(3))
-                        .build(),
-                Post.builder()
                         .description("Salinas")
                         .photo("https://i.imgur.com/CjwquPr.jpg")
                         .creationDate("15-08-2022")

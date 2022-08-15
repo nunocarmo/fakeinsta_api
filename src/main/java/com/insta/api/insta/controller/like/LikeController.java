@@ -7,6 +7,7 @@ import com.insta.api.insta.command.like.post.PostUserLikeDto;
 import com.insta.api.insta.service.like.comment.ICommentUserLikeService;
 import com.insta.api.insta.service.like.post.IPostUserLikeService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,18 +20,22 @@ import javax.validation.Valid;
 public class LikeController {
     private final IPostUserLikeService postUserLikeService;
     private final ICommentUserLikeService commentUserLikeService;
+    @CacheEvict(value = {"posts"}, allEntries = true)
     @PostMapping("/post")
     public PostUserLikeDto addLikeToPost(@Valid @RequestBody InPostUserLikeDto addPostUserLikeDto) {
         return this.postUserLikeService.add(addPostUserLikeDto);
     }
+    @CacheEvict(value = {"posts"}, allEntries = true)
     @PostMapping("/comment")
     public CommentUserLikeDto addLikeToComment(@Valid @RequestBody InCommentUserLikeDto addCommentUserLikeDto) {
         return this.commentUserLikeService.add(addCommentUserLikeDto);
     }
+    @CacheEvict(value = {"posts"}, allEntries = true)
     @DeleteMapping("/post")
     public ResponseEntity<Object> deleteLikeToPost(@Valid @RequestBody InPostUserLikeDto removeLikeFromPost) {
         return this.postUserLikeService.delete(removeLikeFromPost);
     }
+    @CacheEvict(value = {"posts"}, allEntries = true)
     @DeleteMapping("/comment")
     public ResponseEntity<Object> deleteLikeToPost(@Valid @RequestBody InCommentUserLikeDto removeLikeFromComment) {
         return this.commentUserLikeService.delete(removeLikeFromComment);

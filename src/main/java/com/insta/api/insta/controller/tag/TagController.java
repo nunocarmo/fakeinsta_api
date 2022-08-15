@@ -3,6 +3,7 @@ package com.insta.api.insta.controller.tag;
 import com.insta.api.insta.command.tag.AddTagDto;
 import com.insta.api.insta.service.tag.ITagService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class TagController {
     private final ITagService tagService;
+    @CacheEvict(value = {"posts"}, allEntries = true)
     @PostMapping
     public ResponseEntity<Object> addTag(@Valid @RequestBody List<AddTagDto> addTagDto) {
         return this.tagService.add(addTagDto);

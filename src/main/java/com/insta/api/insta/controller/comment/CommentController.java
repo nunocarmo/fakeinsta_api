@@ -8,6 +8,7 @@ import com.insta.api.insta.command.post.PostDto;
 import com.insta.api.insta.service.comment.ICommentService;
 import com.insta.api.insta.service.post.IPostService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +21,18 @@ import javax.validation.Valid;
 public class CommentController {
 
     private final ICommentService commentService;
+    @CacheEvict(value = {"posts"}, allEntries = true)
     @PostMapping
     public CommentDto addComment(@Valid @RequestBody AddCommentDto addCommentDto) {
         return this.commentService.add(addCommentDto);
     }
+    @CacheEvict(value = {"posts"}, allEntries = true)
     @DeleteMapping
     public ResponseEntity<Object> deleteComment(@Valid @RequestBody DeleteCommentDto deleteCommentDto) {
         return this.commentService.delete(deleteCommentDto);
     }
 
+    @CacheEvict(value = {"posts"}, allEntries = true)
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<Object> deleteCommentById(@PathVariable("id") Long id) {
         return this.commentService.deleteById(id);

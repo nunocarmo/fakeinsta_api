@@ -1,42 +1,44 @@
 # FakeIsta API - SpringBoot
+This application is a version of a popular Instagram app by Meta. Users can add photos with Description and Tags, follow other users to see their posts and be followed by others.
+Every post have likes and comments section.
 ***
 
 ### API LINK
-***
-https://moviereview-api.herokuapp.com/swagger-ui/index.html
-<br/><br/>
 
-### EXTERNAL API
 ***
-Our app is powered by IMDb API.
+https://fake-insta-mind-api.herokuapp.com/
 <br/><br/>
 
 ### IMPLEMENTATIONS
+
 ***
+
 - Model Relationships
-- Tests
 - Spring Security
-- External API
 - Swagger
 - Postman Collection
 - Docker Compose
-- Redis Cloud
 - Heroku PostGres DB deployment
-- Heroku Deployment
+- Frontend
   <br/><br/>
 
 ### METHODS
+
 ***
+
 | Request  | Description                                 |
 |----------|---------------------------------------------|
 | `GET`    | Returns information of one or more records. |
 | `POST`   | Used to create new record in DB.            |
 | `PUT`    | Updates date from a record.                 |
 | `DELETE` | Deletes a record from the DB.               |
+
 <br/><br/>
 
 ### RESPONSES
+
 ***
+
 | Responses | Description                          |
 |-----------|--------------------------------------|
 | `200`     | Request executed succesfully.        |
@@ -46,9 +48,11 @@ Our app is powered by IMDb API.
 | `405`     | Method not implemented.              |
 | `409`     | Conflict trying to save same record. |
 | `500`     | Server error.                        |
+
 <br/><br/>
 
 ### AUTHENTICATION - AUTH0
+
 ***
 Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorization.
 <br/><br/>
@@ -57,34 +61,44 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 | Request | Description | Link          |
 |---------|-------------|---------------|
 | `POST`  | `SignUp`    | /api/v1/users |
-              {
-                 "firstName": "Example",
-                 "lastName": "Example",
-                 "email": "example@email.com",
-                 "dateOfBirth": "1960-09-07",
-                 "password": "palavrapass"
-              }
+
+      {
+    "name" : "Example User",
+    "username": "username",
+    "password": "password",
+    "email": "mail@mail.com",
+    "description": "Hey all!"
+      }
 
 | Request | Description | Link          |
 |---------|-------------|---------------|
 | `POST`  | `Login`     | /login        |
+
               {
-                 "email": "joao@email.com",
+                 "email": "mail@mail.com",
                  "password": "palavrapass"
               }
+
 <br/><br/>
+
 ## RESOURCE GRUPS
+
 ***
-### MOVIE ( api/v1/movie )
-| Request  | Description    | Link              |
-|----------|----------------|-------------------|
-| `GET`    | Get All Movies | api/v1/movie      |
-| `DELETE` | Delete Movie   | api/v1/movie/{id} |
+
+### USER ( api/v1/user )
+
+| Request  | Description     | Link              |
+|----------|-----------------|-------------------|
+| `GET`    | Get logged user | api/v1/user       |
+| `GET`    | Get logged user | api/v1/user/{id}  |
+| `DELETE` | Delete user     | api/v1/user/{id}  |
+| `DELETE` | Delete User     | api/v1/user/admin |
 
 | Request  | Description    | Link              |
 |----------|----------------|-------------------|
 | `POST`   | Add Movie      | api/v1/movie      |
 | `PUT`    | Update Movie   | api/v1/movie/{id} |
+
             {
                 "title": "The Shawshank Redemption",
                 "fullTitle": "The Shawshank Redemption (1994)",
@@ -116,6 +130,7 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
             }
 
 ### MOVIE_SEARCH ( api/v1/movie/search )
+
 | Request | Description            | Link                       | Parameters                     |
 |---------|------------------------|----------------------------|--------------------------------|
 | `GET`   | Search By              | api/v1/movie/search        | id, title, year, contentrating |
@@ -124,6 +139,7 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 | `GET`   | Search Movie By Rating | api/v1/movie/search/rating | id                             |
 
 ### ACTOR ( api/v1/actor )
+
 | Request  | Description    | Link              |
 |----------|----------------|-------------------|
 | `GET`    | Get All Actors | api/v1/actor      |
@@ -133,12 +149,14 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 |----------|----------------|-------------------|
 | `POST`   | Add Actor      | api/v1/actor      |
 | `PUT`    | Update Actor   | api/v1/actor/{id} |
+
             {
                 "image": "https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png",
                 "name": "nuno"
             }
 
 ### DIRECTOR ( api/v1/director )
+
 | Request  | Description        | Link            |
 |----------|--------------------|-----------------|
 | `GET`    | Get All Directors  | api/v1/director |
@@ -148,11 +166,13 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 |----------|--------------------|-----------------|
 | `POST`   | Add Director       | api/v1/director |
 | `PUT`    | Update Director    | api/v1/director |
+
             {
                 "name": "José"
             }
 
 ### WRITER ( api/v1/writer )
+
 | Request  | Description     | Link               |
 |----------|-----------------|--------------------|
 | `GET`    | Get All Writers | api/v1/writer      |
@@ -162,11 +182,13 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 |----------|-----------------|--------------------|
 | `POST`   | Add Writer      | api/v1/writer      |
 | `PUT`    | Update Writer   | api/v1/writer/{id} |
+
             {
                 "name": "José"
             }
 
 ### GENRE ( api/v1/genre )
+
 | Request  | Description    | Link              |
 |----------|----------------|-------------------|
 | `GET`    | Get All Genres | api/v1/genre      |
@@ -176,6 +198,7 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 |----------|----------------|-------------------|
 | `POST`   | Add Genre      | api/v1/genre      |
 | `PUT`    | Update Genre   | api/v1/genre/{id} |
+
             {
                 "value": "Drama"
             }
@@ -183,6 +206,7 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 ---
 
 ### USER ( api/v1/users )
+
 | Request  | Description   | Link              |
 |----------|---------------|-------------------|
 | `GET`    | Get All Users | api/v1/users      |
@@ -191,6 +215,7 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 | Request  | Description   | Link              |
 |----------|---------------|-------------------|
 | `PUT`    | Update User   | api/v1/users/{id} |
+
         {
             "firstName": "Joaquim",
             "lastName": "Alberto",
@@ -200,12 +225,14 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
         }
 
 ### USER_SEARCH ( api/v1/users )
+
 | Request  | Description    | Link                | Parameters                         |
 |----------|----------------|---------------------|------------------------------------|
 | `GET`    | Get User By Id | api/v1/users/{id}   | id                                 |
 | `GET`    | Search Users   | api/v1/users/search | roleid, firstname, lastname, email |
 
 ### ROLE ( api/v1/users/roles )
+
 | Request  | Description   | Link                    |
 |----------|---------------|-------------------------|
 | `GET`    | Get All Roles | api/v1/users/roles      |
@@ -215,11 +242,13 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 |----------|---------------|-------------------------|
 | `POST`   | Add Role      | api/v1/users/roles      |
 | `PUT`    | Update Role   | api/v1/users/roles/{id} |
+
             {
                 "roleName": "Client"
             }
 
 ### FAVOURITES ( api/v1/users/favourite )
+
 | Request  | Description        | Link                        | Parameters      |
 |----------|--------------------|-----------------------------|-----------------|
 | `GET`    | Get All Favourites | api/v1/users/favourite/{id} | id              |
@@ -229,6 +258,7 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 ---
 
 ### REVIEW ( api/v1/review )
+
 | Request  | Description     | Link          |
 |----------|-----------------|---------------|
 | `GET`    | Get All Reviews | api/v1/review |
@@ -237,6 +267,7 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 |----------|-----------------|--------------------|
 | `POST`   | Add Review      | api/v1/review      |
 | `PUT`    | Update Review   | api/v1/review/{id} |
+
             {
                 "userId": "1",
                 "movieId": "1",
@@ -247,6 +278,7 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 | Request  | Description     | Link            |
 |----------|-----------------|-----------------|
 | `DELETE` | Delete Review   | api/v1/review   |
+
             {
                     "id": 2,
                     "userId": "1",
@@ -256,11 +288,13 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
             }
 
 ### REVIEW_GET ( api/v1/review/byuser )
+
 | Request  | Description          | Link                      | Parameters      |
 |----------|----------------------|---------------------------|-----------------|
 | `GET`    | Get All User Reviews | api/v1/review/byuser/{id} | id              |
 
 ### RATING ( api/v1/rating )
+
 | Request  | Description     | Link               |
 |----------|-----------------|--------------------|
 | `GET`    | Get All Ratings | api/v1/rating      |
@@ -270,6 +304,7 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 |----------|-----------------|--------------------|
 | `POST`   | Add Rating      | api/v1/rating      |
 | `PUT`    | Update Rating   | api/v1/rating      |
+
             {
                 "rate": "1"
             }
