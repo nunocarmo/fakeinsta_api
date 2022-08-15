@@ -75,7 +75,7 @@ public class Dataloader implements ApplicationRunner {
         Follower follower2 = Follower
                 .builder()
                 .followerUser(usersFromDb.get(0))
-                .followed(usersFromDb.get(3))
+                .followed(usersFromDb.get(2))
                 .build();
         if (this.followerRepository
                 .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
@@ -87,6 +87,36 @@ public class Dataloader implements ApplicationRunner {
                 .builder()
                 .followerUser(usersFromDb.get(0))
                 .followed(usersFromDb.get(3))
+                .build();
+        if (this.followerRepository
+                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower);
+        }
+
+        Follower follower4 = Follower
+                .builder()
+                .followerUser(usersFromDb.get(1))
+                .followed(usersFromDb.get(3))
+                .build();
+        if (this.followerRepository
+                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower);
+        }
+
+        Follower follower5 = Follower
+                .builder()
+                .followerUser(usersFromDb.get(2))
+                .followed(usersFromDb.get(3))
+                .build();
+        if (this.followerRepository
+                .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
+            this.followerRepository.save(follower);
+        }
+
+        Follower follower6 = Follower
+                .builder()
+                .followerUser(usersFromDb.get(1))
+                .followed(usersFromDb.get(2))
                 .build();
         if (this.followerRepository
                 .findFollowerAndFollowedMatch(follower.getFollowerUser().getId(), follower.getFollowed().getId()).isEmpty()) {
@@ -150,21 +180,21 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("1-1-2022")
                         .build(),
                 Comment.builder()
-                        .description("This is a comment num 2")
+                        .description("I'm lovin' it")
                         .userId(users.get(0))
                         .postId(posts.get(0))
                         .creationDate("1-1-2022")
                         .build(),
                 Comment.builder()
-                        .description("This is a comment num 3")
+                        .description("Nice pic")
                         .userId(users.get(1))
-                        .postId(posts.get(1))
+                        .postId(posts.get(5))
                         .creationDate("1-1-2022")
                         .build(),
                 Comment.builder()
-                        .description("This is a comment num 4")
+                        .description("\uD83D\uDC9B")
                         .userId(users.get(1))
-                        .postId(posts.get(2))
+                        .postId(posts.get(8))
                         .creationDate("1-1-2022")
                         .build()
         );
@@ -217,7 +247,136 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("14-08-2022")
                         .tagList(List.of(tags.get(7)))
                         .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Another sunset")
+                        .photo("https://i.imgur.com/2yX2tF3.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(8), tags.get(9)))
+                        .userId(users.get(1))
+                        .build(),
+                Post.builder()
+                        .description("Sky")
+                        .photo("https://i.imgur.com/HGMFuHW.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(9)))
+                        .userId(users.get(1))
+                        .build(),
+                Post.builder()
+                        .description("PCI, Ílhavo")
+                        .photo("https://i.imgur.com/MO4hBhr.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(9),tags.get(1), tags.get(2)))
+                        .userId(users.get(1))
+                        .build(),
+                Post.builder()
+                        .description("Night sky \uD83C\uDF1D")
+                        .photo("https://i.imgur.com/0GkzUF1.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(9)))
+                        .userId(users.get(2))
+                        .build(),
+                Post.builder()
+                        .description("Sky \uD83C\uDF1D")
+                        .photo("https://i.imgur.com/BTaAKxa.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(2)))
+                        .userId(users.get(2))
+                        .build(),
+                Post.builder()
+                        .description("Uma memória da floresta")
+                        .photo("https://i.imgur.com/dJVrSha.jpg")
+                        .creationDate("15-08-2022")
+                        .userId(users.get(0))
+                        .build(),
+                Post.builder()
+                        .description("New haircut")
+                        .photo("https://i.imgur.com/08sGLbN.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(0)))
+                        .userId(users.get(0))
+                        .build(),
+                Post.builder()
+                        .description("Best crab spotting spot :) \uD83E\uDD80")
+                        .photo("https://i.imgur.com/TmVUW3u.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(1), tags.get(3)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Amigo")
+                        .photo("https://i.imgur.com/3EulFTU.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(1), tags.get(3)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Amigo")
+                        .photo("https://i.imgur.com/3EulFTU.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(1), tags.get(3)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Salinas")
+                        .photo("https://i.imgur.com/CjwquPr.jpg")
+                        .creationDate("15-08-2022")
+                        .userId(users.get(0))
+                        .build(),
+                Post.builder()
+                        .description("I want to ride by bicycle, I want to ride my bike!")
+                        .photo("https://i.imgur.com/vSm8IIi.jpg")
+                        .creationDate("15-08-2022")
+                        .userId(users.get(0))
+                        .build(),
+                Post.builder()
+                        .description("Coffee break :)")
+                        .photo("https://i.imgur.com/7PSfr2U.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(1), tags.get(3), tags.get(10)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Ping pong madness: Ala")
+                        .photo("https://i.imgur.com/iLFsXLf.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(1), tags.get(3), tags.get(11)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Ping pong madness: Luís")
+                        .photo("https://i.imgur.com/p7Xo13P.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(1), tags.get(3), tags.get(11)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Ping pong madness: João")
+                        .photo("https://i.imgur.com/BaUSimm.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(1), tags.get(3), tags.get(11)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Ping pong madness: Elisa")
+                        .photo("https://i.imgur.com/8zu1GkM.jpg")
+                        .creationDate("15-08-2022")
+                        .tagList(List.of(tags.get(1), tags.get(3), tags.get(11)))
+                        .userId(users.get(3))
+                        .build(),
+                Post.builder()
+                        .description("Creepy but nice lavender")
+                        .photo("https://i.imgur.com/as4YBZG.jpg")
+                        .creationDate("15-08-2022")
+                        .userId(users.get(2))
+                        .build(),
+                Post.builder()
+                        .description("Forest")
+                        .photo("https://i.imgur.com/DrD7yaU.jpg")
+                        .creationDate("15-08-2022")
+                        .userId(users.get(2))
                         .build()
+
         );
     }
 
@@ -254,6 +413,22 @@ public class Dataloader implements ApplicationRunner {
                 Tag.builder()
                         .tag("#bringSomeKebabs")
                         .postList(null)
+                        .build(),
+                Tag.builder()
+                        .tag("#sunset")
+                        .postList(null)
+                        .build(),
+                Tag.builder()
+                        .tag("#sky")
+                        .postList(null)
+                        .build(),
+                Tag.builder()
+                        .tag("#coffeeBreak")
+                        .postList(null)
+                        .build(),
+                Tag.builder()
+                        .tag("#PingPong")
+                        .postList(null)
                         .build()
         );
     }
@@ -265,7 +440,7 @@ public class Dataloader implements ApplicationRunner {
                         .username("alakropa")
                         .password(encoder.encode("password"))
                         .email("alakropa@mail.com")
-                        .profilePhoto("https://i.imgur.com/4YRZhJO.jpg")
+                        .profilePhoto("https://i.imgur.com/TOfNlVB.jpg")
                         .description("Aloha! \uD83D\uDEB2")
                         .roleId(rolesFromDB.get(0))
                         .build()
