@@ -23,4 +23,6 @@ public interface IPostService {
     ResponseEntity<Object> deleteById(Long id);
 
     List<PostDto> getPostsFromFollowing();
+
+    List<PostDto> getPostsByUserId();
 }

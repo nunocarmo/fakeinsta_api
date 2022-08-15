@@ -179,7 +179,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("1-1-2022")
                         .tagList(List.of(tags.get(1)))
                         .userId(users.get(1))
-                        .userName(users.get(1).getUsername())
                         .build(),
 
                 Post.builder()
@@ -188,7 +187,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("1-1-2022")
                         .tagList(List.of(tags.get(2), tags.get(0)))
                         .userId(users.get(0))
-                        .userName(users.get(0).getUsername())
                         .build(),
 
                 Post.builder()
@@ -197,7 +195,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("1-1-2022")
                         .tagList(List.of(tags.get(0)))
                         .userId(users.get(1))
-                        .userName(users.get(1).getUsername())
                         .build(),
 
                 Post.builder()
@@ -206,7 +203,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("14-08-2022")
                         .tagList(List.of(tags.get(3), tags.get(4), tags.get(5)))
                         .userId(users.get(3))
-                        .userName(users.get(3).getUsername())
                         .build(),
                 Post.builder()
                         .description("Abbey Road of Ílhavo")
@@ -214,7 +210,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("14-08-2022")
                         .tagList(List.of(tags.get(3)))
                         .userId(users.get(3))
-                        .userName(users.get(3).getUsername())
                         .build(),
                 Post.builder()
                         .description("Serious stuff going on here")
@@ -222,7 +217,6 @@ public class Dataloader implements ApplicationRunner {
                         .creationDate("14-08-2022")
                         .tagList(List.of(tags.get(7)))
                         .userId(users.get(3))
-                        .userName(users.get(3).getUsername())
                         .build()
         );
     }

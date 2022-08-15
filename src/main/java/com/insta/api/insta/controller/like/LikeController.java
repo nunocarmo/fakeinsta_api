@@ -15,6 +15,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("api/v1/like")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class LikeController {
     private final IPostUserLikeService postUserLikeService;
     private final ICommentUserLikeService commentUserLikeService;
