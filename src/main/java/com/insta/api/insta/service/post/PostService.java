@@ -110,4 +110,10 @@ public class PostService implements IPostService {
         }
         return this.postConverter.converterList(allPosts, PostDto.class);
     }
+
+    @Override
+    public List<PostDto> getPostsByUserId() {
+        return this.postConverter
+                .converterList(this.postRepository.findByUserId(user.getLoggedUser().getId()), PostDto.class);
+    }
 }
