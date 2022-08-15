@@ -56,7 +56,10 @@ public class PostController {
     public List<PostDto> getPostById(@RequestParam(value = "name") String name) {
         return this.postService.searchPostsByUserName(name);
     }
-
+    @GetMapping("/user")
+    public List<PostDto> getPostByUserId() {
+        return this.postService.getPostsByUserId();
+    }
     @GetMapping("/following")
     public List<PostDto> getFromFollowing() {
         return this.postService.getPostsFromFollowing();
