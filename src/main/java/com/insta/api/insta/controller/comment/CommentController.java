@@ -21,18 +21,18 @@ import javax.validation.Valid;
 public class CommentController {
 
     private final ICommentService commentService;
-    @CacheEvict(value = {"posts"}, allEntries = true)
+    @CacheEvict(value = {"posts", "users"}, allEntries = true)
     @PostMapping
     public CommentDto addComment(@Valid @RequestBody AddCommentDto addCommentDto) {
         return this.commentService.add(addCommentDto);
     }
-    @CacheEvict(value = {"posts"}, allEntries = true)
+    @CacheEvict(value = {"posts", "users"}, allEntries = true)
     @DeleteMapping
     public ResponseEntity<Object> deleteComment(@Valid @RequestBody DeleteCommentDto deleteCommentDto) {
         return this.commentService.delete(deleteCommentDto);
     }
 
-    @CacheEvict(value = {"posts"}, allEntries = true)
+    @CacheEvict(value = {"posts", "users"}, allEntries = true)
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<Object> deleteCommentById(@PathVariable("id") Long id) {
         return this.commentService.deleteById(id);

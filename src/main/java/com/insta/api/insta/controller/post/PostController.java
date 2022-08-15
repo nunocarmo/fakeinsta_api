@@ -32,19 +32,19 @@ public class PostController {
         return this.postService.getAll();
     }
 
-    @CacheEvict(value = {"posts"}, allEntries = true)
+    @CacheEvict(value = {"posts", "users"}, allEntries = true)
     @PostMapping
     public PostDto addPost(@Valid @RequestBody AddPostDto addPostDto) {
         return this.postService.add(addPostDto);
     }
 
-    @CacheEvict(value = {"posts"}, allEntries = true)
+    @CacheEvict(value = {"posts", "users"}, allEntries = true)
     @DeleteMapping
     public ResponseEntity<Object> deletePost(@Valid @RequestBody DeletePostDto deletePostDto) {
         return this.postService.delete(deletePostDto);
     }
 
-    @CacheEvict(value = {"posts"}, allEntries = true)
+    @CacheEvict(value = {"posts", "users"}, allEntries = true)
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<Object> deletePostById(@PathVariable("id") Long id) {
         return this.postService.deleteById(id);
