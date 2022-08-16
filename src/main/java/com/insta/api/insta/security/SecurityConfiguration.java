@@ -54,12 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/configuration/ui", "/configuration/security", "/swagger-ui.html",
                         "/webjars/", "/v3/api-docs/", "/swagger-ui/").permitAll()
                 .anyRequest().authenticated();
-                /*
-                 .antMatchers("/api/v1/students/**").hasAnyRole("STUDENT", "STAFF")
-                 .antMatchers("/api/v1/teachers/**").hasAnyRole("TEACHER", "STAFF")
-                 .antMatchers("/api/v1/staff/**").hasRole("STAFF")*/
-//                .and()
-//                .httpBasic();
+
     }
 
 
