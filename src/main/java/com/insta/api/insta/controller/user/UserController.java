@@ -45,7 +45,6 @@ public class UserController {
     @Cacheable(value = "users")
     @GetMapping("/admin")
     public List<UserDto> getAllUsers() {
-        System.out.println("getting users from DB");
         return this.userService.getAllUsers();
     }
 
