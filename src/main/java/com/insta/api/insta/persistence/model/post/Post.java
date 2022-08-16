@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, unique = true, updatable = false)
