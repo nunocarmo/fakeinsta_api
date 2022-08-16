@@ -177,25 +177,25 @@ public class Dataloader implements ApplicationRunner {
                         .description("WOW")
                         .userId(users.get(1))
                         .postId(posts.get(0))
-                        .creationDate("1-1-2022")
+                        .creationDate("1-1-2022 01:01:01")
                         .build(),
                 Comment.builder()
                         .description("I'm lovin' it")
                         .userId(users.get(0))
                         .postId(posts.get(0))
-                        .creationDate("1-1-2022")
+                        .creationDate("1-1-2022 01:01:01")
                         .build(),
                 Comment.builder()
                         .description("Nice pic")
                         .userId(users.get(1))
                         .postId(posts.get(5))
-                        .creationDate("1-1-2022")
+                        .creationDate("1-1-2022 01:01:01")
                         .build(),
                 Comment.builder()
                         .description("\uD83D\uDC9B")
                         .userId(users.get(1))
                         .postId(posts.get(8))
-                        .creationDate("1-1-2022")
+                        .creationDate("1-1-2022 01:01:01")
                         .build()
         );
     }
