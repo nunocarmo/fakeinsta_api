@@ -1,6 +1,9 @@
 # FakeIsta API - SpringBoot
 This application is a version of a popular Instagram app by Meta. Users can add photos with Description and Tags, follow other users to see their posts and be followed by others.
 Every post have likes and comments section.
+
+Users can make requests only after authentication.
+
 ***
 
 ### API LINK
@@ -15,10 +18,10 @@ https://fake-insta-mind-api.herokuapp.com/
 
 - Model Relationships
 - Spring Security and JWT
-- Swagger
 - Postman Collection
 - Docker Compose
 - Heroku PostGres DB deployment
+- Local cache (Caffeine)
 - Frontend
   <br/><br/>
 
@@ -54,7 +57,7 @@ https://fake-insta-mind-api.herokuapp.com/
 ### AUTHENTICATION - AUTH0
 
 ***
-Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorization.
+This API uses [AuthO](https://auth0.com/) as a way of authentication/authorization.
 <br/><br/>
 **Sign Up and Login:**
 
@@ -74,10 +77,11 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 |---------|-------------|---------------|
 | `POST`  | `Login`     | /login        |
 
-              {
-                 "email": "mail@mail.com",
-                 "password": "palavrapass"
-              }
+
+      {
+        "email": "mail@mail.com",
+        "password": "palavrapass"
+      }
 
 <br/><br/>
 
@@ -87,233 +91,130 @@ Our API uses [AuthO](https://auth0.com/) as a way of authentication/authorizatio
 
 ### USER ( api/v1/user )
 
-| Request | Description                                | Link                                                           | Body / Query parameters                                                                                             |
-|---------|--------------------------------------------|----------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| `GET`   | Get logged user                            | api/v1/user                                                    |                                                                                                                     |
-| `GET`   | Get user by ID                             | api/v1/user/{id}                                               |                                                                                                                     |
-| `GET`   | Search user by Username/ name/ email       | api/v1/user/search | String username, String name, String email                                                                          |
-| `GET`   | Get all users (admin role authorized only) | api/v1/user/admin                                              |                                                                                                                     |
-| `PATCH` | Follow user                                | /api/v1/user/follow                                            | {"toFollowUserId": 1}                                                                                               |
-| `PATCH` | Unfollow user                              | /api/v1/user/unfollow                                          | {"toUnfollowUserId": 2}                                                                                             |
-| `PATCH` | Update user                                |  api/v1/user                                                                 | {"name" : "User", "username": "user1", "password": "password", "email": "mail@mail.com", "description": "Hey all!"} |
-| `DELETE` | Delete user                                |  api/v1/user                                                                            |                                                                                                                     |
+| Request  | Description                                | Link               | Query parameters                           |
+|----------|--------------------------------------------|--------------------|--------------------------------------------|
+| `GET`    | Get logged user                            | api/v1/user        |                                            |
+| `GET`    | Get user by ID                             | api/v1/user/{id}   |                                            |
+| `GET`    | Search user by Username/ name/ email       | api/v1/user/search | String username, String name, String email |
+| `GET`    | Get all users (admin role authorized only) | api/v1/user/admin  |                                            |
+| `DELETE` | Delete user                                | api/v1/user        |                                            |
+| `PATCH`  | Follow user                                | api/v1/user/follow |                                            |
+
+      {
+          "toFollowUserId": 1
+      }
+
+
+| Request | Description   | Link                  | 
+|---------|---------------|-----------------------|
+| `PATCH` | Unfollow user | /api/v1/user/unfollow |                  
+
+
+        {
+          "toUnfollowUserId": 1
+        }
+
+
+| Request | Description | Link        |
+|---------|-------------|-------------|
+| `PATCH` | Update user | api/v1/user |                  
+
+
+     {
+        "name" : "User", 
+        "username": "user1", 
+        "password": "password", 
+        "email": "mail@mail.com", 
+        "description": "Hey all!"
+      } 
 
 
 ### POST ( api/v1/post )
 
-| Request  | Description    | Link              |
-|----------|----------------|-------------------|
-| `POST`   | Add Movie      | api/v1/movie      |
-| `PUT`    | Update Movie   | api/v1/movie/{id} |
+| Request | Description | Link        | 
+|---------|-------------|-------------|
+| `POST`  | Add post    | api/v1/post |                  
 
-            {
-                "title": "The Shawshank Redemption",
-                "fullTitle": "The Shawshank Redemption (1994)",
-                "image": "https://imdb-api.com/images/original/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_Ratio0.6751_AL_.jpg",
-                "year": "1994",
-                "releaseDate": "1994-10-14",
-                "runtimeStr": "2h 22min",
-                "contentRating": "PG",
-                "actorList": [
-                    {
-                        "id": 1
-                    }
-                ],
-                "directorList": [
-                    {
-                        "id": 1
-                    }
-                ],
-                "writerList": [
-                    {
-                        "id": 1
-                    }
-                ],
-                "genreList": [
-                    {
-                        "id": 1
-                    }
-                ]
-            }
+      {
+        "photo":"https://i.imgur.com/imh9kdu.jpg",
+        "description": "The Universe",
+        "tagList": [{"tag":"#sky"}]
+      }
 
-### MOVIE_SEARCH ( api/v1/movie/search )
+| Request  | Description                                    | Link                | Query parameters |
+|----------|------------------------------------------------|---------------------|------------------|
+| `GET`    | Get all posts                                  | api/v1/post         |                  |
+| `GET`    | Search posts by tag                            | api/v1/post/search/ | String tag       |
+| `GET`    | Get post by Id                                 | api/v1/post/{id}    |                  |
+| `GET`    | Search post by username                        | api/v1/post         | String name      |
+| `GET`    | Get post by user Id                            | api/v1/post/user    |                  |
+| `DELETE` | Delete post                                    | api/v1/post         |                  |
+| `DELETE` | Delete post by Id (admin role authorized only) | api/v1/post/ad{id}  |
 
-| Request | Description            | Link                       | Parameters                     |
-|---------|------------------------|----------------------------|--------------------------------|
-| `GET`   | Search By              | api/v1/movie/search        | id, title, year, contentrating |
-| `GET`   | Search Movie Actor Has | api/v1/movie/search/actor  | name                           |
-| `GET`   | Search By Genre        | api/v1/movie/search/genre  | genre                          |
-| `GET`   | Search Movie By Rating | api/v1/movie/search/rating | id                             |
+### FOLLOWER ( api/v1/follower )
 
-### ACTOR ( api/v1/actor )
+| Request | Description                  | Link                           | 
+|---------|------------------------------|--------------------------------|
+| `GET`   | Get followers by user Id     | api/v1/follower/followers/{id} | 
+| `GET`   | Get follows by user Id       | api/v1/follower/followers/{id} | 
+| `GET`   | Get followers by logged user | api/v1/follower/followers      | 
+| `GET`   | Get follows by logged user   | api/v1/follower/follows        | 
 
-| Request  | Description    | Link              |
-|----------|----------------|-------------------|
-| `GET`    | Get All Actors | api/v1/actor      |
-| `DELETE` | Delete Actor   | api/v1/actor/{id} |
+### TAG ( api/v1/tag )
 
-| Request  | Description    | Link              |
-|----------|----------------|-------------------|
-| `POST`   | Add Actor      | api/v1/actor      |
-| `PUT`    | Update Actor   | api/v1/actor/{id} |
+| Request  | Description  | Link              |
+|----------|--------------|-------------------|
+| `POST`   | Add tag      | api/v1/tag        |
 
-            {
-                "image": "https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png",
-                "name": "nuno"
-            }
-
-### DIRECTOR ( api/v1/director )
-
-| Request  | Description        | Link            |
-|----------|--------------------|-----------------|
-| `GET`    | Get All Directors  | api/v1/director |
-| `DELETE` | Delete Director    | api/v1/director |
-
-| Request  | Description        | Link            |
-|----------|--------------------|-----------------|
-| `POST`   | Add Director       | api/v1/director |
-| `PUT`    | Update Director    | api/v1/director |
-
-            {
-                "name": "José"
-            }
-
-### WRITER ( api/v1/writer )
-
-| Request  | Description     | Link               |
-|----------|-----------------|--------------------|
-| `GET`    | Get All Writers | api/v1/writer      |
-| `DELETE` | Delete Writer   | api/v1/writer/{id} |
-
-| Request  | Description     | Link               |
-|----------|-----------------|--------------------|
-| `POST`   | Add Writer      | api/v1/writer      |
-| `PUT`    | Update Writer   | api/v1/writer/{id} |
-
-            {
-                "name": "José"
-            }
-
-### GENRE ( api/v1/genre )
-
-| Request  | Description    | Link              |
-|----------|----------------|-------------------|
-| `GET`    | Get All Genres | api/v1/genre      |
-| `DELETE` | Delete Genre   | api/v1/genre/{id} |
-
-| Request  | Description    | Link              |
-|----------|----------------|-------------------|
-| `POST`   | Add Genre      | api/v1/genre      |
-| `PUT`    | Update Genre   | api/v1/genre/{id} |
-
-            {
-                "value": "Drama"
-            }
-
----
-
-### USER ( api/v1/users )
-
-| Request  | Description   | Link              |
-|----------|---------------|-------------------|
-| `GET`    | Get All Users | api/v1/users      |
-| `DELETE` | Delete User   | api/v1/users/{id} |
-
-| Request  | Description   | Link              |
-|----------|---------------|-------------------|
-| `PUT`    | Update User   | api/v1/users/{id} |
-
+      [
         {
-            "firstName": "Joaquim",
-            "lastName": "Alberto",
-            "email": "jqi@email.com",
-            "dateOfBirth": "1976-10-02",
-            "password": "palavrapass"
+          "tag": "#hey"
         }
+      ]
 
-### USER_SEARCH ( api/v1/users )
+### COMMENT ( api/v1/comment )
 
-| Request  | Description    | Link                | Parameters                         |
-|----------|----------------|---------------------|------------------------------------|
-| `GET`    | Get User By Id | api/v1/users/{id}   | id                                 |
-| `GET`    | Search Users   | api/v1/users/search | roleid, firstname, lastname, email |
+| Request  | Description  | Link              |
+|----------|--------------|-------------------|
+| `POST`   | Add comment  | api/v1/comment    |
 
-### ROLE ( api/v1/users/roles )
+    {
+      "description": "Very nice!",
+      "postId": 7,
+      "userId": 1
+    }
 
-| Request  | Description   | Link                    |
-|----------|---------------|-------------------------|
-| `GET`    | Get All Roles | api/v1/users/roles      |
-| `DELETE` | Delete Role   | api/v1/users/roles/{id} |
+| Request  | Description                                       | Link                      |
+|----------|---------------------------------------------------|---------------------------|
+| `DELETE` | Delete comment                                    | api/v1/comment            |
+| `PUT`    | Delete comment by Id (admin role authorized only) | api/v1/comment/admin/{id} |
 
-| Request  | Description   | Link                    |
-|----------|---------------|-------------------------|
-| `POST`   | Add Role      | api/v1/users/roles      |
-| `PUT`    | Update Role   | api/v1/users/roles/{id} |
 
-            {
-                "roleName": "Client"
-            }
 
-### FAVOURITES ( api/v1/users/favourite )
 
-| Request  | Description        | Link                        | Parameters      |
-|----------|--------------------|-----------------------------|-----------------|
-| `GET`    | Get All Favourites | api/v1/users/favourite/{id} | id              |
-| `POST`   | Add Favourite      | api/v1/users/favourite      | userid, movieid |
-| `DELETE` | Delete Favourite   | api/v1/users/favourite      | userid, movieid |
+### LIKE ( api/v1/like )
 
----
+| Request  | Description        | Link             |
+|----------|--------------------|------------------|
+| `POST`   | Add like to a post | api/v1/like/post |
 
-### REVIEW ( api/v1/review )
+    {
+      "postId": 1,
+      "userId": 1
+    }
 
-| Request  | Description     | Link          |
-|----------|-----------------|---------------|
-| `GET`    | Get All Reviews | api/v1/review |
 
-| Request  | Description     | Link               |
-|----------|-----------------|--------------------|
-| `POST`   | Add Review      | api/v1/review      |
-| `PUT`    | Update Review   | api/v1/review/{id} |
+| Request  | Description           | Link                |
+|----------|-----------------------|---------------------|
+| `POST`   | Add like to a comment | api/v1/like/comment |
 
-            {
-                "userId": "1",
-                "movieId": "1",
-                "review": "this movie is really really really bad",
-                "ratingId": 1
-            }
+    {
+      "commentId": 1,
+      "userId": 1
+    }
 
-| Request  | Description     | Link            |
-|----------|-----------------|-----------------|
-| `DELETE` | Delete Review   | api/v1/review   |
 
-            {
-                    "id": 2,
-                    "userId": "1",
-                    "movieId": "1",
-                    "review": "this movie is really really really bad",
-                    "ratingId": 1
-            }
-
-### REVIEW_GET ( api/v1/review/byuser )
-
-| Request  | Description          | Link                      | Parameters      |
-|----------|----------------------|---------------------------|-----------------|
-| `GET`    | Get All User Reviews | api/v1/review/byuser/{id} | id              |
-
-### RATING ( api/v1/rating )
-
-| Request  | Description     | Link               |
-|----------|-----------------|--------------------|
-| `GET`    | Get All Ratings | api/v1/rating      |
-| `DELETE` | Delete Rating   | api/v1/rating/{id} |
-
-| Request  | Description     | Link               |
-|----------|-----------------|--------------------|
-| `POST`   | Add Rating      | api/v1/rating      |
-| `PUT`    | Update Rating   | api/v1/rating      |
-
-            {
-                "rate": "1"
-            }
-
----
+| Request  | Description                | Link                |
+|----------|----------------------------|---------------------|
+| `DELETE` | Delete like from a post    | api/v1/like/post    |
+| `DELETE` | Delete like from a comment | api/v1/like/comment |
