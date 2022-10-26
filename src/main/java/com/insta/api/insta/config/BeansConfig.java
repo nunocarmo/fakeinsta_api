@@ -45,8 +45,11 @@ public class BeansConfig {
             public void addCorsMappings(CorsRegistry registry) {
 //                registry.addMapping("/*").allowedOrigins("http://localhost:3000")
 //                        .exposedHeaders("Authorization");
-                registry.addMapping("/*").allowedOrigins("*")
-                        .exposedHeaders("Authorization");
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
+                        .exposedHeaders("*")
+                        .allowedHeaders("*")
+                        .allowedMethods("*");
             }
         };
     }
