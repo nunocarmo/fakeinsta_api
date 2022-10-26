@@ -45,7 +45,7 @@ public class BeansConfig {
             public void addCorsMappings(CorsRegistry registry) {
 //                registry.addMapping("/*").allowedOrigins("http://localhost:3000")
 //                        .exposedHeaders("Authorization");
-                registry.addMapping("/*").allowedOrigins("https://project-instagram-fe.vercel.app")
+                registry.addMapping("/*").allowedOrigins("*")
                         .exposedHeaders("Authorization");
             }
         };
