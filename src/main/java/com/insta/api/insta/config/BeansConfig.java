@@ -43,8 +43,8 @@ public class BeansConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/*").allowedOrigins("http://localhost:3000")
-                        .exposedHeaders("Authorization");
+//                registry.addMapping("/*").allowedOrigins("http://localhost:3000")
+//                        .exposedHeaders("Authorization");
                 registry.addMapping("/*").allowedOrigins("https://project-instagram-fe.vercel.app")
                         .exposedHeaders("Authorization");
             }
