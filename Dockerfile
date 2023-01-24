@@ -1,4 +1,5 @@
 FROM docker.io/openjdk:18-alpine
-COPY target/*.jar app.jar
-EXPOSE 8080
-CMD ["java","-jar","/app.jar"]
+WORKDIR /app
+COPY . .
+RUN mvn clean install
+CMD mvn spring-boot:run
