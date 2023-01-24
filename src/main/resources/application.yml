@@ -6,15 +6,13 @@ spring:
     ansi:
       enabled: ALWAYS
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
     hibernate:
-      ddl-auto: ${HIBERNATE_DDL_AUTO:update}
-      show-sql: true
+      ddl-auto: update
   datasource:
-    platform: postgres
-    url: ${POSTGRES_URL:jdbc:postgresql://ec2-54-228-218-84.eu-west-1.compute.amazonaws.com:5432/dcrqlvi8m8ssi0}
-    username: ${POSTGRES_USERNAME:ujvzvephzuvtej}
-    password: ${POSTGRES_PASSWORD:ceeb70a55d3c6b66bcc2a341c4ee29cdeea658a8f984c71e8fdceb69f5aefbe7}
+    url: ${POSTGRES_URL:no}
+    username: ${POSTGRES_USERNAME:root}
+    password: ${POSTGRES_PASSWORD:yes}
     driverClassName: org.postgresql.Driver
